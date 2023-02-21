@@ -1,76 +1,98 @@
 import {
   Address__wrapper,
-  Body,
   Headline,
   MainFormat,
-  MainFormat__input,
-  MainFormat__input__address,
-  MainFormat__input__contents,
-  MainFormat__input__search,
-  MainFormat__name,
+  YoutubeLink,
+  AddressNum,
+  Contents,
+  AddressNum__search,
+  Label,
   Picture__wrapper,
-  Radio,
+  RadioButton,
   Upload__button,
   Upload__picture,
   UserWrapper,
   Wrapper,
+  Password,
+  Writer,
+  ContentsTitle,
+  Address__input,
+  RadioLabel,
+  Radio__wrapper,
 } from "@/styles/emotion";
 
 export default function UploadPage() {
   // 여기는 자바스크립트
   return (
     // 여기는 html
-    <Body>
-      <Wrapper>
-        <Headline>게시물 등록</Headline>
-        <UserWrapper>
-          <MainFormat>
-            <MainFormat__name>작성자</MainFormat__name>
-            <MainFormat__input placeholder="이름을 적어주세요"></MainFormat__input>
-          </MainFormat>
-          <MainFormat>
-            <MainFormat__name>비밀번호</MainFormat__name>
-            <MainFormat__input placeholder="비밀번호를 적어주세요"></MainFormat__input>
-          </MainFormat>
-        </UserWrapper>
+    <Wrapper>
+      <Headline>게시물 등록</Headline>
+      <UserWrapper>
         <MainFormat>
-          <MainFormat__name>제목</MainFormat__name>
-          <MainFormat__input placeholder="제목을 작성해주세요"></MainFormat__input>
+          <Label>작성자</Label>
+          <Writer type="text" placeholder="이름을 적어주세요"></Writer>
         </MainFormat>
         <MainFormat>
-          <MainFormat__name>내용</MainFormat__name>
-          <MainFormat__input__contents placeholder="내용을 작성해주세요"></MainFormat__input__contents>
+          <Label>비밀번호</Label>
+          <Password
+            type="password"
+            placeholder="비밀번호를 적어주세요"
+          ></Password>
         </MainFormat>
-        <MainFormat>
-          <MainFormat__name>주소</MainFormat__name>
-          <Address__wrapper>
-            <MainFormat__input__address placeholder="07250"></MainFormat__input__address>
-            <MainFormat__input__search>우편번호검색</MainFormat__input__search>
-          </Address__wrapper>
-          <MainFormat__input></MainFormat__input>
-          <MainFormat__input></MainFormat__input>
-        </MainFormat>
-        <MainFormat>
-          <MainFormat__name>유튜브</MainFormat__name>
-          <MainFormat__input placeholder="링크를 복사해주세요"></MainFormat__input>
-        </MainFormat>
-        <MainFormat>
-          <MainFormat__name>사진첨부</MainFormat__name>
-          <Picture__wrapper>
-            <Upload__picture></Upload__picture>
-            <Upload__picture></Upload__picture>
-            <Upload__picture></Upload__picture>
-          </Picture__wrapper>
-        </MainFormat>
-        <MainFormat>
-          <MainFormat__name>메인 설정</MainFormat__name>
-          <Picture__wrapper>
-            <Radio type="radio" name="contents" value="유튜브"></Radio>
-            <Radio type="radio" name="contents" value="사진"></Radio>
-          </Picture__wrapper>
-        </MainFormat>
-        <Upload__button>등록하기</Upload__button>
-      </Wrapper>
-    </Body>
+      </UserWrapper>
+
+      <MainFormat>
+        <Label>제목</Label>
+        <ContentsTitle
+          type="text"
+          placeholder="제목을 작성해주세요"
+        ></ContentsTitle>
+      </MainFormat>
+      <MainFormat>
+        <Label>내용</Label>
+        <Contents type="text" placeholder="내용을 작성해주세요"></Contents>
+      </MainFormat>
+      <MainFormat>
+        <Label>주소</Label>
+        <Address__wrapper>
+          <AddressNum type="text" placeholder="07250"></AddressNum>
+          <AddressNum__search>우편번호검색</AddressNum__search>
+        </Address__wrapper>
+        <Address__input></Address__input>
+        <Address__input></Address__input>
+      </MainFormat>
+      <MainFormat>
+        <Label>유튜브</Label>
+        <YoutubeLink placeholder="링크를 복사해주세요"></YoutubeLink>
+      </MainFormat>
+      <MainFormat>
+        <Label>사진첨부</Label>
+        <Picture__wrapper>
+          <Upload__picture>+</Upload__picture>
+          <Upload__picture>+</Upload__picture>
+          <Upload__picture>+</Upload__picture>
+        </Picture__wrapper>
+      </MainFormat>
+      <MainFormat>
+        <Label>메인 설정</Label>
+        <Radio__wrapper>
+          <RadioButton
+            type="radio"
+            id="youtube"
+            name="radio-button"
+            value="유튜브"
+          ></RadioButton>
+          <RadioLabel htmlFor="youtube">유튜브</RadioLabel>
+          <RadioButton
+            type="radio"
+            id="image"
+            name="radio-button"
+            value="사진"
+          ></RadioButton>
+          <RadioLabel htmlFor="image">사진</RadioLabel>
+        </Radio__wrapper>
+      </MainFormat>
+      <Upload__button>등록하기</Upload__button>
+    </Wrapper>
   );
 }
