@@ -22,14 +22,12 @@ export const UserWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: red;
 `;
 
 export const MainFormat = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  width: 100%;
+  justify-content: flex-start;
   padding-bottom: 30px;
   //   background-color: yellow;
 `;
@@ -55,14 +53,14 @@ export const Password = styled.input`
 `;
 
 export const ContentsTitle = styled.input`
-  width: 100%;
+  width: 996px;
   height: 52px;
   border: 1px solid #bdbdbd;
   padding-left: 20px;
 `;
 
 export const Contents = styled.textarea`
-  width: 100%;
+  width: 996px;
   height: 480px;
   border: 1px solid #bdbdbd;
   padding: 20px;
@@ -90,7 +88,7 @@ export const AddressNum__search = styled.button`
 `;
 
 export const Address__input = styled.input`
-  width: 100%;
+  width: 996px;
   height: 52px;
   border: 1px solid #bdbdbd;
   margin-bottom: 10px;
@@ -98,7 +96,7 @@ export const Address__input = styled.input`
 `;
 
 export const YoutubeLink = styled.input`
-  width: 100%;
+  width: 996px;
   height: 52px;
   border: 1px solid #bdbdbd;
   margin-bottom: 10px;
@@ -106,6 +104,7 @@ export const YoutubeLink = styled.input`
 `;
 
 export const Picture__wrapper = styled.div`
+  width: 996px;
   display: flex;
   flex-direction: row;
   margin-bottom: 10px;
@@ -119,6 +118,7 @@ export const Upload__picture = styled.button`
 `;
 
 export const Radio__wrapper = styled.div`
+  width: 996px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -140,4 +140,10 @@ export const Upload__button = styled.button`
   border: none;
   font-size: 16px;
   font-weight: 500;
+`;
+
+export const ErrorMessage = styled.div`
+  font-size: 10px;
+  color: red;
+  margin: 10px 0 0 20px;
 `;
