@@ -21,7 +21,21 @@ import {
   Radio__wrapper,
   ErrorMessage,
 } from "@/styles/emotion";
+import { gql, useMutation } from "@apollo/client";
 import { useState } from "react";
+
+//1. 함수 위에서 mutation 가져오기 (대소문자 상관없다)
+//2. 타입 설정해주기
+const CREATE_BOARD = gql`
+  mutation typeSetting($createBoardInput: CreateBoardInput!) {
+    createBoard(createBoardInput: $createBoardInput) {
+      _id
+      writer
+      title
+      contents
+    }
+  }
+`;
 
 export default function UploadPage() {
   // 여기는 자바스크립트
@@ -62,7 +76,11 @@ export default function UploadPage() {
     }
   }
 
-  function onClickUpload() {
+  //3. useMutation 사용해서 함수 선언하기
+  const [newJeans] = useMutation(CREATE_BOARD);
+
+  //4. async와 await를 사용해서 동기적 함수 만들기
+  const onClickUpload = async () => {
     if (!writer) {
       setWriterError("*이름을 입력해주세요");
     }
@@ -76,9 +94,20 @@ export default function UploadPage() {
       setContentsError("*내용을 입력해주세요");
     }
     if (writer && password && contentsTitle && contents) {
+      const result = await newJeans({
+        variables: {
+          createBoardInput: {
+            writer: writer,
+            password: password,
+            title: contentsTitle,
+            contents: contents,
+          },
+        },
+      });
+      console.log(result);
       alert("게시글 등록이 완료되었습니다");
     }
-  }
+  };
 
   return (
     // 여기는 html
