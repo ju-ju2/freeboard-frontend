@@ -15,6 +15,7 @@ export const Headline = styled.div`
   font-size: 36px;
   font-weight: 700;
   margin-bottom: 80px;
+  font-family: "Nanum Myeongjo", serif;
 `;
 
 export const UserWrapper = styled.div`
