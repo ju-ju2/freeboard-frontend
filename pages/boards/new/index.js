@@ -97,20 +97,25 @@ export default function UploadPage() {
       setContentsError("*내용을 입력해주세요");
     }
     if (writer && password && contentsTitle && contents) {
-      const result = await newJeans({
-        variables: {
-          createBoardInput: {
-            writer: writer,
-            password: password,
-            title: contentsTitle,
-            contents: contents,
-            //key와 value가 같으면 value를 생략할 수 있다, shorthand-property  ex) writer, password, ~~
+      try {
+        const result = await newJeans({
+          variables: {
+            createBoardInput: {
+              writer: writer,
+              password: password,
+              title: contentsTitle,
+              contents: contents,
+              //key와 value가 같으면 value를 생략할 수 있다, shorthand-property  ex) writer, password, ~~
+            },
           },
-        },
-      });
-      console.log(result);
-      alert("게시글 등록이 완료되었습니다");
-      router.push("/boards/3");
+        });
+        console.log(result);
+        alert("게시글 등록이 완료되었습니다");
+        console.log(result.data.createBoard._id);
+        router.push(`/boards/${result.data.createBoard._id}`);
+      } catch (error) {
+        alert(error.message);
+      }
     }
   };
 
