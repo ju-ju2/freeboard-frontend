@@ -20,8 +20,10 @@ import {
   RadioLabel,
   Radio__wrapper,
   ErrorMessage,
+  AllWrapper,
 } from "@/styles/emotion";
 import { gql, useMutation } from "@apollo/client";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 //1. 함수 위에서 mutation 가져오기 (대소문자 상관없다)
@@ -39,6 +41,7 @@ const CREATE_BOARD = gql`
 
 export default function UploadPage() {
   // 여기는 자바스크립트
+  const router = useRouter();
 
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
@@ -76,10 +79,10 @@ export default function UploadPage() {
     }
   }
 
-  //3. useMutation 사용해서 함수 선언하기
+  //3. useMutation 사용해서 함수 선언하기, 1,2번을 등록하는 로직
   const [newJeans] = useMutation(CREATE_BOARD);
 
-  //4. async와 await를 사용해서 동기적 함수 만들기
+  //4. async와 await를 사용해서 동기적 함수 만들기, 3번을 실행하는 로직
   const onClickUpload = async () => {
     if (!writer) {
       setWriterError("*이름을 입력해주세요");
@@ -101,103 +104,107 @@ export default function UploadPage() {
             password: password,
             title: contentsTitle,
             contents: contents,
+            //key와 value가 같으면 value를 생략할 수 있다, shorthand-property  ex) writer, password, ~~
           },
         },
       });
       console.log(result);
       alert("게시글 등록이 완료되었습니다");
+      router.push("/boards/3");
     }
   };
 
   return (
     // 여기는 html
-    <Wrapper>
-      <Headline>게시글 등록</Headline>
-      <UserWrapper>
-        <MainFormat>
-          <Label>작성자</Label>
-          <Writer
-            type="text"
-            placeholder="이름을 적어주세요"
-            onChange={onChangeWriter}
-          ></Writer>
-          <ErrorMessage>{writerError}</ErrorMessage>
-        </MainFormat>
-        <MainFormat>
-          <Label>비밀번호</Label>
-          <Password
-            type="password"
-            placeholder="비밀번호를 적어주세요"
-            onChange={onChangePassword}
-          ></Password>
-          <ErrorMessage>{passwordError}</ErrorMessage>
-        </MainFormat>
-      </UserWrapper>
+    <AllWrapper>
+      <Wrapper>
+        <Headline>게시글 등록</Headline>
+        <UserWrapper>
+          <MainFormat>
+            <Label>작성자</Label>
+            <Writer
+              type="text"
+              placeholder="이름을 적어주세요"
+              onChange={onChangeWriter}
+            ></Writer>
+            <ErrorMessage>{writerError}</ErrorMessage>
+          </MainFormat>
+          <MainFormat>
+            <Label>비밀번호</Label>
+            <Password
+              type="password"
+              placeholder="비밀번호를 적어주세요"
+              onChange={onChangePassword}
+            ></Password>
+            <ErrorMessage>{passwordError}</ErrorMessage>
+          </MainFormat>
+        </UserWrapper>
 
-      <MainFormat>
-        <Label>제목</Label>
-        <ContentsTitle
-          type="text"
-          placeholder="제목을 작성해주세요"
-          onChange={onChangeContentsTitle}
-        ></ContentsTitle>
-        <ErrorMessage>{contentsTitleError}</ErrorMessage>
-      </MainFormat>
-      <MainFormat>
-        <Label>내용</Label>
-        <Contents
-          type="text"
-          placeholder="내용을 작성해주세요"
-          onChange={onChangeContents}
-        ></Contents>
-        <ErrorMessage>{contentsError}</ErrorMessage>
-      </MainFormat>
-      <MainFormat>
-        <Label>주소</Label>
-        <Address__wrapper>
-          <AddressNum type="text" placeholder="07250"></AddressNum>
-          <AddressNum__search>우편번호검색</AddressNum__search>
-        </Address__wrapper>
-        <Address__input></Address__input>
-        <Address__input></Address__input>
-        <ErrorMessage></ErrorMessage>
-      </MainFormat>
-      <MainFormat>
-        <Label>유튜브</Label>
-        <YoutubeLink
-          type="text"
-          placeholder="링크를 복사해주세요"
-        ></YoutubeLink>
-        <ErrorMessage></ErrorMessage>
-      </MainFormat>
-      <MainFormat>
-        <Label>사진첨부</Label>
-        <Picture__wrapper>
-          <Upload__picture>+</Upload__picture>
-          <Upload__picture>+</Upload__picture>
-          <Upload__picture>+</Upload__picture>
-        </Picture__wrapper>
-      </MainFormat>
-      <MainFormat>
-        <Label>메인 설정</Label>
-        <Radio__wrapper>
-          <RadioButton
-            type="radio"
-            id="youtube"
-            name="radio-button"
-            value="유튜브"
-          ></RadioButton>
-          <RadioLabel htmlFor="youtube">유튜브</RadioLabel>
-          <RadioButton
-            type="radio"
-            id="image"
-            name="radio-button"
-            value="사진"
-          ></RadioButton>
-          <RadioLabel htmlFor="image">사진</RadioLabel>
-        </Radio__wrapper>
-      </MainFormat>
-      <Upload__button onClick={onClickUpload}>등록하기</Upload__button>
-    </Wrapper>
+        <MainFormat>
+          <Label>제목</Label>
+          <ContentsTitle
+            type="text"
+            placeholder="제목을 작성해주세요"
+            onChange={onChangeContentsTitle}
+          ></ContentsTitle>
+          <ErrorMessage>{contentsTitleError}</ErrorMessage>
+        </MainFormat>
+        <MainFormat>
+          <Label>내용</Label>
+          <Contents
+            type="text"
+            placeholder="내용을 작성해주세요"
+            onChange={onChangeContents}
+          ></Contents>
+          <ErrorMessage>{contentsError}</ErrorMessage>
+        </MainFormat>
+        <MainFormat>
+          <Label>주소</Label>
+          <Address__wrapper>
+            <AddressNum type="text" placeholder="07250"></AddressNum>
+            <AddressNum__search>우편번호검색</AddressNum__search>
+          </Address__wrapper>
+          <Address__input></Address__input>
+          <Address__input></Address__input>
+          <ErrorMessage></ErrorMessage>
+        </MainFormat>
+        <MainFormat>
+          <Label>유튜브</Label>
+          <YoutubeLink
+            type="text"
+            placeholder="링크를 복사해주세요"
+          ></YoutubeLink>
+          <ErrorMessage></ErrorMessage>
+        </MainFormat>
+        <MainFormat>
+          <Label>사진첨부</Label>
+          <Picture__wrapper>
+            <Upload__picture>+</Upload__picture>
+            <Upload__picture>+</Upload__picture>
+            <Upload__picture>+</Upload__picture>
+          </Picture__wrapper>
+        </MainFormat>
+        <MainFormat>
+          <Label>메인 설정</Label>
+          <Radio__wrapper>
+            <RadioButton
+              type="radio"
+              id="youtube"
+              name="radio-button"
+              value="유튜브"
+            ></RadioButton>
+            <RadioLabel htmlFor="youtube">유튜브</RadioLabel>
+            <RadioButton
+              type="radio"
+              id="image"
+              name="radio-button"
+              value="사진"
+            ></RadioButton>
+            <RadioLabel htmlFor="image">사진</RadioLabel>
+          </Radio__wrapper>
+        </MainFormat>
+        <Upload__button onClick={onClickUpload}>등록하기</Upload__button>
+      </Wrapper>
+    </AllWrapper>
   );
 }
