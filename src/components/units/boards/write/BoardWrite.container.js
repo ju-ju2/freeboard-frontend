@@ -21,10 +21,18 @@ export default function FreeBoardWrite() {
   const [contentsTitleError, setContentsTitleError] = useState("");
   const [contentsError, setContentsError] = useState("");
 
+  const [buttonColor, setButtonColor] = useState(false);
+
   function onChangeWriter(event) {
     setWriter(event.target.value);
     if (event.target.value !== "") {
       setWriterError("");
+    }
+    if (!event.target.value) {
+      setButtonColor(false);
+    }
+    if (event.target.value && password && contentsTitle && contents) {
+      setButtonColor(true);
     }
   }
   function onChangePassword(event) {
@@ -32,17 +40,35 @@ export default function FreeBoardWrite() {
     if (event.target.value !== "") {
       setPasswordError("");
     }
+    if (!event.target.value) {
+      setButtonColor(false);
+    }
+    if (writer && event.target.value && contentsTitle && contents) {
+      setButtonColor(true);
+    }
   }
   function onChangeContentsTitle(event) {
     setContentsTitle(event.target.value);
     if (event.target.value !== "") {
       setContentsTitleError("");
     }
+    if (!event.target.value) {
+      setButtonColor(false);
+    }
+    if (writer && password && event.target.value && contents) {
+      setButtonColor(true);
+    }
   }
   function onChangeContents(event) {
     setContents(event.target.value);
     if (event.target.value !== "") {
       setContentsError("");
+    }
+    if (!event.target.value) {
+      setButtonColor(false);
+    }
+    if (writer && password && contentsTitle && event.target.value) {
+      setButtonColor(true);
     }
   }
 
@@ -97,6 +123,7 @@ export default function FreeBoardWrite() {
       contentsTitleError={contentsTitleError}
       contentsError={contentsError}
       onClickUpload={onClickUpload}
+      buttonColor={buttonColor}
     />
   );
 }

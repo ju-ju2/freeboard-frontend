@@ -89,7 +89,10 @@ export default function FreeBoardWriteUI(props) {
             <S.RadioLabel htmlFor="image">사진</S.RadioLabel>
           </S.Radio__wrapper>
         </S.MainFormat>
-        <S.Upload__button onClick={props.onClickUpload}>
+        <S.Upload__button
+          onClick={props.onClickUpload}
+          buttonColor={props.buttonColor}
+        >
           등록하기
         </S.Upload__button>
       </S.Wrapper>
