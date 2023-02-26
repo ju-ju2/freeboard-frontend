@@ -372,16 +372,17 @@ export const ListRow = styled.div`
 export const ListColumn = styled.div`
   font-size: 16px;
   color: #4f4f4f;
+  width: 25%;
 `;
 export const ListColumnNum = styled.div`
   font-size: 16px;
   color: #4f4f4f;
-  width: 30%;
+  width: 25%;
 `;
 export const ListColumnTitle = styled.div`
   font-size: 16px;
   color: #4f4f4f;
-  width: 30%;
+  width: 25%;
 `;
 export const ListColumnWriter = styled.div`
   font-size: 16px;
