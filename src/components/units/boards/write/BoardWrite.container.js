@@ -118,16 +118,26 @@ export default function FreeBoardWrite(props) {
   };
 
   const onClickEdit = async () => {
+    const myVariables = {
+      updateBoardInput: {},
+      password,
+      boardId: router.query.boardId,
+    };
+    if (contentsTitle) myVariables.updateBoardInput.title = contentsTitle;
+    if (contents) myVariables.updateBoardInput.contents = contents;
+    //수정된 내용이 있을때만 추가해서 뮤테이션 날려주기
+
     try {
       const result = await updateBoard({
-        variables: {
-          updateBoardInput: {
-            title: contentsTitle,
-            contents,
-          },
-          password,
-          boardId: router.query.boardId,
-        },
+        // variables: {
+        //   updateBoardInput: {
+        //     title: contentsTitle,
+        //     contents,
+        //   },
+        //   password,
+        //   boardId: router.query.boardId,
+        // },
+        variables: myVariables,
       });
       console.log(result);
       alert(
@@ -156,6 +166,7 @@ export default function FreeBoardWrite(props) {
       onClickEdit={onClickEdit}
       isActive={isActive}
       isEdit={props.isEdit}
+      data={props.data}
     />
   );
 }

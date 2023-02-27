@@ -12,6 +12,7 @@ export default function FreeBoardWriteUI(props) {
               type="text"
               placeholder="이름을 적어주세요"
               onChange={props.onChangeWriter}
+              defaultValue={props.data?.fetchBoard.writer}
             ></S.Writer>
             <S.ErrorMessage>{props.writerError}</S.ErrorMessage>
           </S.MainFormat>
@@ -32,6 +33,7 @@ export default function FreeBoardWriteUI(props) {
             type="text"
             placeholder="제목을 작성해주세요"
             onChange={props.onChangeContentsTitle}
+            defaultValue={props.data?.fetchBoard.title}
           ></S.ContentsTitle>
           <S.ErrorMessage>{props.contentsTitleError}</S.ErrorMessage>
         </S.MainFormat>
@@ -41,6 +43,7 @@ export default function FreeBoardWriteUI(props) {
             type="text"
             placeholder="내용을 작성해주세요"
             onChange={props.onChangeContents}
+            defaultValue={props.data?.fetchBoard.contents}
           ></S.Contents>
           <S.ErrorMessage>{props.contentsError}</S.ErrorMessage>
         </S.MainFormat>
