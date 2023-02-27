@@ -11,12 +11,6 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
-// export const TitleWrapper = styled.div`
-// display: flex
-// flex-direction: row;
-// padding: 40px 0;
-// border-top: 1px solid #BDBDBD;
-// `;
 
 export const TitleWrapper = styled.div`
   display: flex;
