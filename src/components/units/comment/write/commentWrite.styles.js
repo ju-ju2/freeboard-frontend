@@ -69,7 +69,7 @@ export const UploadWrapper = styled.div`
   flex-direction: row;
 `;
 export const StringNum = styled.div`
-  padding: 20px;
+  padding: 20px 0 0 20px;
 `;
 export const UploadButton = styled.button`
   width: 91px;
