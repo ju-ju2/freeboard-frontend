@@ -13,5 +13,11 @@ export default function FreeBoardDetail() {
   });
   console.log(data);
 
-  return <FreeBoardDetailUI data={data} />;
+  const onClickMoveToEdit = () => {
+    router.push(`/boards/${router.query.boardId}/edit`);
+  };
+
+  return (
+    <FreeBoardDetailUI data={data} onClickMoveToEdit={onClickMoveToEdit} />
+  );
 }

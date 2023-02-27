@@ -4,7 +4,7 @@ export default function FreeBoardWriteUI(props) {
   return (
     <S.AllWrapper>
       <S.Wrapper>
-        <S.Headline>게시글 등록</S.Headline>
+        <S.Headline>{props.isEdit ? "게시글 수정" : "게시글 등록"}</S.Headline>
         <S.UserWrapper>
           <S.MainFormat>
             <S.Label>작성자</S.Label>
@@ -90,10 +90,11 @@ export default function FreeBoardWriteUI(props) {
           </S.Radio__wrapper>
         </S.MainFormat>
         <S.Upload__button
-          onClick={props.onClickUpload}
-          buttonColor={props.buttonColor}
+          onClick={props.isEdit ? props.onClickEdit : props.onClickUpload}
+          isActive={props.isEdit ? true : props.isActive}
+          //게시글은 일부만 수정해도 수정되기 때문에 늘 노란색을 띄고 있도록
         >
-          등록하기
+          {props.isEdit ? "수정하기" : "등록하기"}
         </S.Upload__button>
       </S.Wrapper>
     </S.AllWrapper>

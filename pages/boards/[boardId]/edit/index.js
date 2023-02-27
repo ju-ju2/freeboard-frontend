@@ -3,5 +3,5 @@ import FreeBoardWrite from "@/src/components/units/boards/write/BoardWrite.conta
 export default function UploadPage() {
   // 여기는 자바스크립트
 
-  return <FreeBoardWrite isEdit={false} />;
+  return <FreeBoardWrite isEdit={true} />;
 }

@@ -35,7 +35,9 @@ export default function FreeBoardDetailUI(props) {
       </S.Wrapper>
       <S.ButtonWrapper>
         <S.InBoardButton>목록으로</S.InBoardButton>
-        <S.InBoardButton>수정하기</S.InBoardButton>
+        <S.InBoardButton onClick={props.onClickMoveToEdit}>
+          수정하기
+        </S.InBoardButton>
         <S.InBoardButton>삭제하기</S.InBoardButton>
       </S.ButtonWrapper>
     </S.AllWrapper>

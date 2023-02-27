@@ -144,7 +144,7 @@ export const Upload__button = styled.button`
   width: 179px;
   height: 52px;
   // background-color: #ffd600;
-  background-color: ${(props) => (props.buttonColor ? "#ffd600" : "#bdbdbd")};
+  background-color: ${(props) => (props.isActive ? "#ffd600" : "#bdbdbd")};
   border: none;
   font-size: 16px;
   font-weight: 500;
