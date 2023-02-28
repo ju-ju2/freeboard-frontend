@@ -1,6 +1,7 @@
-import FreeBoardWrite from "@/src/components/units/boards/write/BoardWrite.container";
+// import FreeBoardWrite from "@/src/components/units/boards/write/BoardWrite.container";
 import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
+import FreeBoardWrite from "../../../../src/components/units/boards/write/BoardWrite.container";
 
 export const FETCH_BOARD = gql`
   query typeSetting($boardId: ID!) {

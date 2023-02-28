@@ -1,10 +1,11 @@
+import { GetDate } from "../../../../commons/utils/utils";
 import * as S from "./commentList.styles";
 
 export default function CommentListUI(props) {
   return (
     <S.AllWrapper>
-      <S.Container>
-        {props.data?.fetchBoards.map((el) => (
+      {props.data?.fetchBoardComments.map((el) => (
+        <S.Container>
           <S.CommentWrapper>
             <S.IconAvatar src="../../img/icon-pageMan.png"></S.IconAvatar>
             <S.CommentAlign>
@@ -18,16 +19,20 @@ export default function CommentListUI(props) {
                   <S.IconStar src="../../img/icon-starGray.png"></S.IconStar>
                 </S.StarWrapper>
                 <S.ButtonBox>
-                  <S.MutationButton src="../../img/icon-modify.png"></S.MutationButton>
-                  <S.MutationButton src="../../img/icon-x.png"></S.MutationButton>
+                  <S.ModifyButton src="../../img/icon-modify.png"></S.ModifyButton>
+                  <S.DeleteButton
+                    id={el._id}
+                    src="../../img/icon-x.png"
+                    onClick={props.onClickDelete}
+                  ></S.DeleteButton>
                 </S.ButtonBox>
               </S.WriterStarWrapper>
               <S.Comment>{el.contents}</S.Comment>
-              <S.Date>{el.createdAt}</S.Date>
+              <S.Date>{GetDate(el.createdAt)}</S.Date>
             </S.CommentAlign>
           </S.CommentWrapper>
-        ))}
-      </S.Container>
+        </S.Container>
+      ))}
     </S.AllWrapper>
   );
 }

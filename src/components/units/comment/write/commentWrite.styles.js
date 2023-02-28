@@ -56,7 +56,7 @@ export const CommentWrapper = styled.div`
   flex-direction: column;
   margin-bottom: 10px;
 `;
-export const Comment = styled.input`
+export const Comment = styled.textarea`
   padding: 20px;
   padding-left: 20px;
   background: none;

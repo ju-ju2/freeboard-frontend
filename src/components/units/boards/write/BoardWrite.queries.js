@@ -1,5 +1,3 @@
-// const { gql } = require("@apollo/client");
-
 import { gql } from "@apollo/client";
 
 export const CREATE_BOARD = gql`

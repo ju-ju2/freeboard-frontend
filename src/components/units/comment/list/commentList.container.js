@@ -1,10 +1,41 @@
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
+import { useRouter } from "next/router";
 import CommentListUI from "./commentList.presenter";
-import { FETCH_BOARDS } from "./commentList.queries";
+import {
+  DELETE_BOARD_COMMENT,
+  FETCH_BOARD_COMMENTS,
+} from "./commentList.queries";
 
 export default function CommentList() {
-  const { data } = useQuery(FETCH_BOARDS);
-  console.log(data);
+  // const { data } = useQuery(FETCH_BOARDS);
+  const router = useRouter();
+  const { data } = useQuery(FETCH_BOARD_COMMENTS, {
+    variables: {
+      boardId: router.query.boardId,
+    },
+  });
 
-  return <CommentListUI data={data} />;
+  const [deleteBoardComment] = useMutation(DELETE_BOARD_COMMENT);
+
+  const onClickDelete = async (event) => {
+    const myPassword = prompt("비밀번호를 입력하세요");
+    try {
+      await deleteBoardComment({
+        variables: {
+          password: myPassword,
+          boardCommentId: event.target.id,
+        },
+        refetchQueries: [
+          {
+            query: FETCH_BOARD_COMMENTS,
+            variables: { boardId: router.query.boardId },
+          },
+        ],
+      });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  return <CommentListUI data={data} onClickDelete={onClickDelete} />;
 }

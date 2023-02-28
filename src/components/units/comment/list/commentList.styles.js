@@ -52,7 +52,12 @@ export const ButtonBox = styled.div`
   flex-direction: row;
   margin-left: auto;
 `;
-export const MutationButton = styled.img`
+export const ModifyButton = styled.img`
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+`;
+export const DeleteButton = styled.img`
   width: 18px;
   height: 18px;
   margin-right: 10px;

@@ -1,8 +1,8 @@
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import FreeBoardWriteUI from "./BoardWriter.presenter";
-import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWriter.queries";
+import FreeBoardWriteUI from "./BoardWrite.presenter";
+import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
 
 //1. 함수 위에서 mutation 가져오기 (대소문자 상관없다)
 //2. 타입 설정해주기

@@ -1,4 +1,4 @@
-import * as S from "./BoardWriter.styles";
+import * as S from "./BoardWrite.styles";
 
 export default function FreeBoardWriteUI(props) {
   return (
