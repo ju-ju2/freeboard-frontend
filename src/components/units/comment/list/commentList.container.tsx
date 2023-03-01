@@ -32,13 +32,14 @@ export default function CommentList() {
 
   const onClickDelete = async (event: MouseEvent<HTMLImageElement>) => {
     event.stopPropagation();
+    // 이벤트버블링(자식에게 onClick이 실행되면 부모 onClick이 실행된다)을 막기위한 명령
 
     const myPassword = prompt("비밀번호를 입력하세요");
     try {
       await deleteBoardComment({
         variables: {
           password: myPassword,
-          boardCommentId: event.target.id,
+          boardCommentId: event.currentTarget.id,
         },
         refetchQueries: [
           {
