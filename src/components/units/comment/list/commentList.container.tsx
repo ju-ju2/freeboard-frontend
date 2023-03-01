@@ -31,6 +31,8 @@ export default function CommentList() {
   >(DELETE_BOARD_COMMENT);
 
   const onClickDelete = async (event: MouseEvent<HTMLImageElement>) => {
+    event.stopPropagation();
+
     const myPassword = prompt("비밀번호를 입력하세요");
     try {
       await deleteBoardComment({
@@ -53,7 +55,8 @@ export default function CommentList() {
   };
 
   const onClickComment = (event: MouseEvent<HTMLDivElement>) => {
-    alert(`${event.target.id}님이 작성한 글입니다.`);
+    alert(`${event.currentTarget.id}님이 작성한 글입니다.`);
+    //event.currentTarget = 버블링 이벤트로 인해 어디를 클릭해도 onClick이 실행된 id를 선택한다.
   };
 
   return (
