@@ -1,12 +1,13 @@
 import { GetDate } from "../../../../commons/utils/utils";
 import * as S from "./commentList.styles";
+import { ICommentListUIProps } from "./commentList.types";
 
-export default function CommentListUI(props) {
+export default function CommentListUI(props: ICommentListUIProps) {
   return (
     <S.AllWrapper>
       {props.data?.fetchBoardComments.map((el) => (
         <S.Container>
-          <S.CommentWrapper>
+          <S.CommentWrapper onClick={props.onClickComment} id={el.writer}>
             <S.IconAvatar src="../../img/icon-pageMan.png"></S.IconAvatar>
             <S.CommentAlign>
               <S.WriterStarWrapper>

@@ -1,29 +1,36 @@
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
+import {
+  IMutation,
+  IMutationCreateBoardArgs,
+  IMutationUpdateBoardArgs,
+  IUpdateBoardInput,
+} from "../../../../commons/types/generated/types";
 import FreeBoardWriteUI from "./BoardWrite.presenter";
 import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
+import { IFreeBoardWriteProps } from "./BoardWrite.types";
 
 //1. 함수 위에서 mutation 가져오기 (대소문자 상관없다)
 //2. 타입 설정해주기
 
-export default function FreeBoardWrite(props) {
+export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
   const router = useRouter();
 
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
-  const [contentsTitle, setContentsTitle] = useState("");
+  const [title, setContentsTitle] = useState("");
   const [contents, setContents] = useState("");
 
   // 에러메시지 변수담기
   const [writerError, setWriterError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [contentsTitleError, setContentsTitleError] = useState("");
+  const [titleError, setTitleError] = useState("");
   const [contentsError, setContentsError] = useState("");
 
   const [isActive, setIsActive] = useState(false);
 
-  function onChangeWriter(event) {
+  function onChangeWriter(event: ChangeEvent<HTMLInputElement>) {
     setWriter(event.target.value);
     if (event.target.value !== "") {
       setWriterError("");
@@ -32,27 +39,27 @@ export default function FreeBoardWrite(props) {
     //   setIsActive(false);
     // }
     //아래 else문으로 대체
-    if (event.target.value && password && contentsTitle && contents) {
+    if (event.target.value && password && title && contents) {
       setIsActive(true);
     } else {
       setIsActive(false);
     }
   }
-  function onChangePassword(event) {
+  function onChangePassword(event: ChangeEvent<HTMLInputElement>) {
     setPassword(event.target.value);
     if (event.target.value !== "") {
       setPasswordError("");
     }
-    if (writer && event.target.value && contentsTitle && contents) {
+    if (writer && event.target.value && title && contents) {
       setIsActive(true);
     } else {
       setIsActive(false);
     }
   }
-  function onChangeContentsTitle(event) {
+  function onChangeTitle(event: ChangeEvent<HTMLInputElement>) {
     setContentsTitle(event.target.value);
     if (event.target.value !== "") {
-      setContentsTitleError("");
+      setTitleError("");
     }
     if (writer && password && event.target.value && contents) {
       setIsActive(true);
@@ -60,12 +67,12 @@ export default function FreeBoardWrite(props) {
       setIsActive(false);
     }
   }
-  function onChangeContents(event) {
+  function onChangeContents(event: ChangeEvent<HTMLTextAreaElement>) {
     setContents(event.target.value);
     if (event.target.value !== "") {
       setContentsError("");
     }
-    if (writer && password && contentsTitle && event.target.value) {
+    if (writer && password && title && event.target.value) {
       setIsActive(true);
     } else {
       setIsActive(false);
@@ -73,8 +80,14 @@ export default function FreeBoardWrite(props) {
   }
 
   //3. useMutation 사용해서 함수 선언하기, 1,2번을 등록하는 로직
-  const [newJeans] = useMutation(CREATE_BOARD);
-  const [updateBoard] = useMutation(UPDATE_BOARD);
+  const [createBoard] = useMutation<
+    Pick<IMutation, "createBoard">,
+    IMutationCreateBoardArgs
+  >(CREATE_BOARD);
+  const [updateBoard] = useMutation<
+    Pick<IMutation, "updateBoard">,
+    IMutationUpdateBoardArgs
+  >(UPDATE_BOARD);
 
   //4. async와 await를 사용해서 동기적 함수 만들기, 3번을 실행하는 로직
   const onClickUpload = async () => {
@@ -84,20 +97,20 @@ export default function FreeBoardWrite(props) {
     if (!password) {
       setPasswordError("*비밀번호를 입력해주세요");
     }
-    if (!contentsTitle) {
-      setContentsTitleError("*제목을 입력해주세요");
+    if (!title) {
+      setTitleError("*제목을 입력해주세요");
     }
     if (!contents) {
       setContentsError("*내용을 입력해주세요");
     }
-    if (writer && password && contentsTitle && contents) {
+    if (writer && password && title && contents) {
       try {
-        const result = await newJeans({
+        const result = await createBoard({
           variables: {
             createBoardInput: {
               writer: writer,
               password: password,
-              title: contentsTitle,
+              title: title,
               contents: contents,
               //key와 value가 같으면 value를 생략할 수 있다, shorthand-property  ex) writer, password, ~~
             },
@@ -109,22 +122,29 @@ export default function FreeBoardWrite(props) {
             ? "게시글 수정이 완료되었습니다"
             : "게시글 등록이 완료되었습니다"
         );
-        console.log(result.data.createBoard._id);
-        router.push(`/boards/${result.data.createBoard._id}`);
+        console.log(result.data?.createBoard._id);
+        router.push(`/boards/${result.data?.createBoard._id}`);
       } catch (error) {
-        alert(error.message);
+        if (error instanceof Error) {
+          alert(error.message);
+        }
       }
     }
   };
 
   const onClickEdit = async () => {
-    const myVariables = {
-      updateBoardInput: {},
-      password,
-      boardId: router.query.boardId,
-    };
-    if (contentsTitle) myVariables.updateBoardInput.title = contentsTitle;
-    if (contents) myVariables.updateBoardInput.contents = contents;
+    if (!title && !contents) {
+      alert("수정한 내용이 없습니다");
+      return;
+    }
+    if (!password) {
+      alert("비밀번호를 입력해주세요");
+      return;
+    }
+
+    const updateBoardInput: IUpdateBoardInput = {};
+    if (title) updateBoardInput.title = title;
+    if (contents) updateBoardInput.contents = contents;
     //수정된 내용이 있을때만 추가해서 뮤테이션 날려주기
 
     try {
@@ -137,7 +157,11 @@ export default function FreeBoardWrite(props) {
         //   password,
         //   boardId: router.query.boardId,
         // },
-        variables: myVariables,
+        variables: {
+          updateBoardInput,
+          password,
+          boardId: String(router.query.boardId),
+        },
       });
       console.log(result);
       alert(
@@ -145,10 +169,12 @@ export default function FreeBoardWrite(props) {
           ? "게시글 수정이 완료되었습니다"
           : "게시글 등록이 완료되었습니다"
       );
-      console.log(result.data.updateBoard._id);
-      router.push(`/boards/${result.data.updateBoard._id}`);
+      console.log(result.data?.updateBoard._id);
+      router.push(`/boards/${result.data?.updateBoard._id}`);
     } catch (error) {
-      alert(error.message);
+      if (error instanceof Error) {
+        alert(error.message);
+      }
     }
   };
 
@@ -156,11 +182,11 @@ export default function FreeBoardWrite(props) {
     <FreeBoardWriteUI
       onChangeWriter={onChangeWriter}
       onChangePassword={onChangePassword}
-      onChangeContentsTitle={onChangeContentsTitle}
+      onChangeTitle={onChangeTitle}
       onChangeContents={onChangeContents}
       writerError={writerError}
       passwordError={passwordError}
-      contentsTitleError={contentsTitleError}
+      titleError={titleError}
       contentsError={contentsError}
       onClickUpload={onClickUpload}
       onClickEdit={onClickEdit}

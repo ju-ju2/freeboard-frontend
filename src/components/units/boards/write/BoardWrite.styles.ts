@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { IUploadButtonProps } from "./BoardWrite.types";
 
 export const AllWrapper = styled.div`
   display: flex;
@@ -144,7 +145,8 @@ export const Upload__button = styled.button`
   width: 179px;
   height: 52px;
   // background-color: #ffd600;
-  background-color: ${(props) => (props.isActive ? "#ffd600" : "#bdbdbd")};
+  background-color: ${(props: IUploadButtonProps) =>
+    props.isActive ? "#ffd600" : "#bdbdbd"};
   border: none;
   font-size: 16px;
   font-weight: 500;

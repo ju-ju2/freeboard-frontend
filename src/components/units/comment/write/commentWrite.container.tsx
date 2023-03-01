@@ -1,6 +1,10 @@
 import { gql, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
+import {
+  IMutation,
+  IMutationCreateBoardCommentArgs,
+} from "../../../../commons/types/generated/types";
 import CommentWriteUI from "./commentWrite.presenter";
 import { CREATE_BOARD_COMMENT } from "./commentWrite.queries";
 
@@ -20,20 +24,23 @@ export default function CommentWrite() {
   const router = useRouter();
 
   // const [createBoardComment] = useMutation(CREATE_BOARD_COMMENT);
-  const [createBoardComment] = useMutation(CREATE_BOARD_COMMENT);
+  const [createBoardComment] = useMutation<
+    Pick<IMutation, "createBoardComment">,
+    IMutationCreateBoardCommentArgs
+  >(CREATE_BOARD_COMMENT);
 
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
   const [contents, setContents] = useState("");
   const [rating, setRating] = useState(3);
 
-  const onChangeWriter = (event) => {
+  const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
     setWriter(event.target.value);
   };
-  const onChangePassword = (event) => {
+  const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
   };
-  const onChangeContents = (event) => {
+  const onChangeContents = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setContents(event.target.value);
   };
 
@@ -47,7 +54,7 @@ export default function CommentWrite() {
             contents,
             rating,
           },
-          boardId: router.query.boardId,
+          boardId: String(router.query.boardId),
         },
         refetchQueries: [
           {
@@ -57,7 +64,9 @@ export default function CommentWrite() {
         ],
       });
     } catch (error) {
-      alert(error.message);
+      if (error instanceof Error) {
+        alert(error.message);
+      }
     }
   };
 

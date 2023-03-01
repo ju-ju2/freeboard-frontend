@@ -1,6 +1,7 @@
 import * as S from "./BoardDetail.styles";
+import { IFreeBoardDetailUIProps } from "./BoardDetail.types";
 
-export default function FreeBoardDetailUI(props) {
+export default function FreeBoardDetailUI(props: IFreeBoardDetailUIProps) {
   return (
     <S.AllWrapper>
       <S.Wrapper>
@@ -34,7 +35,9 @@ export default function FreeBoardDetailUI(props) {
         </S.InBoardFooter>
       </S.Wrapper>
       <S.ButtonWrapper>
-        <S.InBoardButton>목록으로</S.InBoardButton>
+        <S.InBoardButton onClick={props.onClickMoveToBoards}>
+          목록으로
+        </S.InBoardButton>
         <S.InBoardButton onClick={props.onClickMoveToEdit}>
           수정하기
         </S.InBoardButton>

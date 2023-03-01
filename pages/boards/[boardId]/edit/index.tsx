@@ -1,6 +1,10 @@
 // import FreeBoardWrite from "@/src/components/units/boards/write/BoardWrite.container";
 import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
+import {
+  IQuery,
+  IQueryFetchBoardArgs,
+} from "../../../../src/commons/types/generated/types";
 import FreeBoardWrite from "../../../../src/components/units/boards/write/BoardWrite.container";
 
 export const FETCH_BOARD = gql`
@@ -18,9 +22,18 @@ export const FETCH_BOARD = gql`
 export default function UploadPage() {
   const router = useRouter();
 
-  const { data } = useQuery(FETCH_BOARD, {
-    variables: { boardId: router.query.boardId },
-  });
+  // if(typeof router.query.boardId !== "string"){
+  //   router.push('/')
+  //   return <></>
+  //   //아래쪽이 실행이 되지않고 기본페이지(/)가 보여지기전에 빈페이지(<></>)를 리턴한다
+  // }
+
+  const { data } = useQuery<Pick<IQuery, "fetchBoard">, IQueryFetchBoardArgs>(
+    FETCH_BOARD,
+    {
+      variables: { boardId: String(router.query.boardId) },
+    }
+  );
 
   return <FreeBoardWrite isEdit={true} data={data} />;
 }

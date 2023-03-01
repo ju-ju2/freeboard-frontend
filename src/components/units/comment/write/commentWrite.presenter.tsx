@@ -1,6 +1,7 @@
 import * as S from "./commentWrite.styles";
+import { ICommentWriteUIProps } from "./commentWrite.types";
 
-export default function CommentWriteUI(props) {
+export default function CommentWriteUI(props: ICommentWriteUIProps) {
   return (
     <S.AllWrapper>
       <S.Container>
@@ -10,10 +11,12 @@ export default function CommentWriteUI(props) {
         </S.TitleWrapper>
         <S.UserWrapper>
           <S.UserInfo
+            type="text"
             placeholder="작성자"
             onChange={props.onChangeWriter}
           ></S.UserInfo>
           <S.UserInfo
+            type="password"
             placeholder="비밀번호"
             onChange={props.onChangePassword}
           ></S.UserInfo>

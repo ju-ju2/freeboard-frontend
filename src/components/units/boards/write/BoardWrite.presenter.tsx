@@ -1,6 +1,7 @@
 import * as S from "./BoardWrite.styles";
+import { IFreeBoardWriteUIProps } from "./BoardWrite.types";
 
-export default function FreeBoardWriteUI(props) {
+export default function FreeBoardWriteUI(props: IFreeBoardWriteUIProps) {
   return (
     <S.AllWrapper>
       <S.Wrapper>
@@ -32,15 +33,14 @@ export default function FreeBoardWriteUI(props) {
           <S.ContentsTitle
             type="text"
             placeholder="제목을 작성해주세요"
-            onChange={props.onChangeContentsTitle}
+            onChange={props.onChangeTitle}
             defaultValue={props.data?.fetchBoard.title}
           ></S.ContentsTitle>
-          <S.ErrorMessage>{props.contentsTitleError}</S.ErrorMessage>
+          <S.ErrorMessage>{props.titleError}</S.ErrorMessage>
         </S.MainFormat>
         <S.MainFormat>
           <S.Label>내용</S.Label>
           <S.Contents
-            type="text"
             placeholder="내용을 작성해주세요"
             onChange={props.onChangeContents}
             defaultValue={props.data?.fetchBoard.contents}
