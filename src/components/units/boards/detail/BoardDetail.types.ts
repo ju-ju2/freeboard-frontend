@@ -4,4 +4,6 @@ export interface IFreeBoardDetailUIProps {
   data?: Pick<IQuery, "fetchBoard">;
   onClickMoveToEdit: () => void;
   onClickMoveToBoards: () => void;
+  onClickLike: () => void;
+  onClickDislike: () => void;
 }

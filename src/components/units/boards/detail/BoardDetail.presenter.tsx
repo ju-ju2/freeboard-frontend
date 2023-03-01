@@ -1,3 +1,4 @@
+import { GetDate } from "../../../../commons/utils/utils";
 import * as S from "./BoardDetail.styles";
 import { IFreeBoardDetailUIProps } from "./BoardDetail.types";
 
@@ -10,7 +11,7 @@ export default function FreeBoardDetailUI(props: IFreeBoardDetailUIProps) {
           <S.NameDateWrapper>
             <S.InBoardWriter>{props.data?.fetchBoard.writer}</S.InBoardWriter>
             <S.InBoardDate>
-              Date : {props.data?.fetchBoard.createdAt}
+              Date : {GetDate(props.data?.fetchBoard.createdAt)}
             </S.InBoardDate>
           </S.NameDateWrapper>
           <S.IconLink src="../../img/icon-link.png"></S.IconLink>
@@ -25,12 +26,18 @@ export default function FreeBoardDetailUI(props: IFreeBoardDetailUIProps) {
         </S.InBoardBody>
         <S.InBoardFooter>
           <S.LikeWrapper>
-            <S.IconLike src="../../img/icon-good.png"></S.IconLike>
+            <S.IconLike
+              onClick={props.onClickLike}
+              src="../../img/icon-good.png"
+            ></S.IconLike>
             <S.LikeNum>{props.data?.fetchBoard.likeCount}</S.LikeNum>
           </S.LikeWrapper>
           <S.LikeWrapper>
-            <S.IconLike src="../../img/icon-bad.png"></S.IconLike>
-            <S.DislikeNum>{props.data?.fetchBoard.likeCount}</S.DislikeNum>
+            <S.IconLike
+              onClick={props.onClickDislike}
+              src="../../img/icon-bad.png"
+            ></S.IconLike>
+            <S.DislikeNum>{props.data?.fetchBoard.dislikeCount}</S.DislikeNum>
           </S.LikeWrapper>
         </S.InBoardFooter>
       </S.Wrapper>

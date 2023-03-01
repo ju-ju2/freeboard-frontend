@@ -99,6 +99,7 @@ export const IconLike = styled.img`
   height: 47px;
   padding: 8px;
   margin: 5px;
+  cursor: pointer;
 `;
 
 export const LikeWrapper = styled.div`

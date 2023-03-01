@@ -1,11 +1,14 @@
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import {
+  IMutation,
+  IMutationDislikeBoardArgs,
+  IMutationLikeBoardArgs,
   IQuery,
   IQueryFetchBoardArgs,
 } from "../../../../commons/types/generated/types";
 import FreeBoardDetailUI from "./BoardDetail.presenter";
-import { FETCH_BOARD } from "./BoardDetail.queries";
+import { DISLIKE_BOARD, FETCH_BOARD, LIKE_BOARD } from "./BoardDetail.queries";
 
 export default function FreeBoardDetail() {
   const router = useRouter();
@@ -29,11 +32,61 @@ export default function FreeBoardDetail() {
     router.push("/boards");
   };
 
+  const [likeBoard] = useMutation<
+    Pick<IMutation, "likeBoard">,
+    IMutationLikeBoardArgs
+  >(LIKE_BOARD);
+  const onClickLike = async () => {
+    try {
+      await likeBoard({
+        variables: {
+          boardId: String(router.query.boardId),
+        },
+        refetchQueries: [
+          {
+            query: FETCH_BOARD,
+            variables: { boardId: router.query.boardId },
+          },
+        ],
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
+    }
+  };
+
+  const [dislikeBoard] = useMutation<
+    Pick<IMutation, "dislikeBoard">,
+    IMutationDislikeBoardArgs
+  >(DISLIKE_BOARD);
+  const onClickDislike = async () => {
+    try {
+      await dislikeBoard({
+        variables: {
+          boardId: String(router.query.boardId),
+        },
+        refetchQueries: [
+          {
+            query: FETCH_BOARD,
+            variables: { boardId: router.query.boardId },
+          },
+        ],
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message);
+      }
+    }
+  };
+
   return (
     <FreeBoardDetailUI
       data={data}
       onClickMoveToEdit={onClickMoveToEdit}
       onClickMoveToBoards={onClickMoveToBoards}
+      onClickLike={onClickLike}
+      onClickDislike={onClickDislike}
     />
   );
 }

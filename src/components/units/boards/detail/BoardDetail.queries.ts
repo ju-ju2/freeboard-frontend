@@ -13,3 +13,15 @@ export const FETCH_BOARD = gql`
     }
   }
 `;
+
+export const LIKE_BOARD = gql`
+  mutation typeSetting($boardId: ID!) {
+    likeBoard(boardId: $boardId)
+  }
+`;
+
+export const DISLIKE_BOARD = gql`
+  mutation typeSetting($boardId: ID!) {
+    dislikeBoard(boardId: $boardId)
+  }
+`;
