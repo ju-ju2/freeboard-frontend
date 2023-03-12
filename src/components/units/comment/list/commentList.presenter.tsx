@@ -1,3 +1,4 @@
+import { Rate } from "antd";
 import { GetDate } from "../../../../commons/utils/utils";
 import * as S from "./commentList.styles";
 import { ICommentListUIProps } from "./commentList.types";
@@ -6,19 +7,13 @@ export default function CommentListUI(props: ICommentListUIProps) {
   return (
     <S.AllWrapper>
       {props.data?.fetchBoardComments.map((el) => (
-        <S.Container>
+        <S.Container key={el}>
           <S.CommentWrapper onClick={props.onClickComment} id={el.writer}>
             <S.IconAvatar src="../../img/icon-pageMan.png"></S.IconAvatar>
             <S.CommentAlign>
               <S.WriterStarWrapper>
                 <S.Writer>{el.writer}</S.Writer>
-                <S.StarWrapper>
-                  <S.IconStar src="../../img/icon-starYellow.png"></S.IconStar>
-                  <S.IconStar src="../../img/icon-starYellow.png"></S.IconStar>
-                  <S.IconStar src="../../img/icon-starYellow.png"></S.IconStar>
-                  <S.IconStar src="../../img/icon-starGray.png"></S.IconStar>
-                  <S.IconStar src="../../img/icon-starGray.png"></S.IconStar>
-                </S.StarWrapper>
+                <Rate allowHalf value={el.rating} />
                 <S.ButtonBox>
                   <S.ModifyButton src="../../img/icon-modify.png"></S.ModifyButton>
                   <S.DeleteButton

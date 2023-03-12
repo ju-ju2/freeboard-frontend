@@ -1,3 +1,4 @@
+import { ModalStaticFunctions } from "antd/es/modal/confirm";
 import { ChangeEvent } from "react";
 import { IQuery } from "../../../../commons/types/generated/types";
 
@@ -20,13 +21,16 @@ export interface IFreeBoardWriteUIProps {
   onChangePassword: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeTitle: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;
-  writerError: String;
-  passwordError: String;
-  titleError: String;
-  contentsError: String;
+  writerError: string;
+  passwordError: string;
+  titleError: string;
+  contentsError: string;
   onClickUpload: () => void;
   onClickEdit: () => void;
   isActive: boolean;
   isEdit: boolean;
   data?: Pick<IQuery, "fetchBoard">;
+  isModalOpen: boolean;
+  handleOk: () => void;
+  handleCancel: () => void;
 }

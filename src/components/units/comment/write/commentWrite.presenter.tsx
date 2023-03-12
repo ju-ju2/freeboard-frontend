@@ -1,3 +1,4 @@
+import { Rate } from "antd";
 import * as S from "./commentWrite.styles";
 import { ICommentWriteUIProps } from "./commentWrite.types";
 
@@ -20,13 +21,11 @@ export default function CommentWriteUI(props: ICommentWriteUIProps) {
             placeholder="비밀번호"
             onChange={props.onChangePassword}
           ></S.UserInfo>
-          <S.StarWrapper>
-            <S.IconStar src="../../img/icon-starGray.png"></S.IconStar>
-            <S.IconStar src="../../img/icon-starGray.png"></S.IconStar>
-            <S.IconStar src="../../img/icon-starGray.png"></S.IconStar>
-            <S.IconStar src="../../img/icon-starGray.png"></S.IconStar>
-            <S.IconStar src="../../img/icon-starGray.png"></S.IconStar>
-          </S.StarWrapper>
+          <Rate
+            onChange={props.setRating}
+            allowHalf
+            defaultValue={props.rating}
+          />
         </S.UserWrapper>
         <S.CommentWrapper>
           <S.Comment

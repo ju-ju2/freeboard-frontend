@@ -6,4 +6,5 @@ export interface ICommentWriteUIProps {
   onChangeContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   onClickUploadComment: () => void;
   contents: string;
+  onchangeRate: (event) => void;
 }

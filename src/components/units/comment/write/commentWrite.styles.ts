@@ -32,6 +32,7 @@ export const UserWrapper = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 20px;
+  align-items: center;
 `;
 export const UserInfo = styled.input`
   width: 180px;

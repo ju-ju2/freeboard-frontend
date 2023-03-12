@@ -1,3 +1,4 @@
+import { Button, Modal } from "antd";
 import * as S from "./BoardWrite.styles";
 import { IFreeBoardWriteUIProps } from "./BoardWrite.types";
 
@@ -27,7 +28,6 @@ export default function FreeBoardWriteUI(props: IFreeBoardWriteUIProps) {
             <S.ErrorMessage>{props.passwordError}</S.ErrorMessage>
           </S.MainFormat>
         </S.UserWrapper>
-
         <S.MainFormat>
           <S.Label>제목</S.Label>
           <S.ContentsTitle
@@ -95,10 +95,18 @@ export default function FreeBoardWriteUI(props: IFreeBoardWriteUIProps) {
         <S.Upload__button
           onClick={props.isEdit ? props.onClickEdit : props.onClickUpload}
           isActive={props.isEdit ? true : props.isActive}
-          //게시글은 일부만 수정해도 수정되기 때문에 늘 노란색을 띄고 있도록
+          // 게시글은 일부만 수정해도 수정되기 때문에 늘 노란색을 띄고 있도록
         >
           {props.isEdit ? "수정하기" : "등록하기"}
         </S.Upload__button>
+        <Modal
+          title="error"
+          open={props.isModalOpen}
+          onOk={props.handleOk}
+          onCancel={props.handleCancel}
+        >
+          <p>수정한 내용이 없습니다</p>
+        </Modal>
       </S.Wrapper>
     </S.AllWrapper>
   );

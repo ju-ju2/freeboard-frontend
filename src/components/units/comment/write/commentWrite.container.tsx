@@ -32,7 +32,7 @@ export default function CommentWrite() {
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
   const [contents, setContents] = useState("");
-  const [rating, setRating] = useState(3);
+  const [rating, setRating] = useState(0);
 
   const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
     setWriter(event.target.value);
@@ -77,6 +77,8 @@ export default function CommentWrite() {
       onChangeContents={onChangeContents}
       onClickUploadComment={onClickUploadComment}
       contents={contents}
+      setRating={setRating}
+      rating={rating}
     />
   );
 }
