@@ -1,3 +1,4 @@
+import { Tooltip } from "antd";
 import { GetDate } from "../../../../commons/utils/utils";
 import * as S from "./BoardDetail.styles";
 import { IFreeBoardDetailUIProps } from "./BoardDetail.types";
@@ -14,8 +15,19 @@ export default function FreeBoardDetailUI(props: IFreeBoardDetailUIProps) {
               Date : {GetDate(props.data?.fetchBoard.createdAt)}
             </S.InBoardDate>
           </S.NameDateWrapper>
-          <S.IconLink src="../../img/icon-link.png"></S.IconLink>
-          <S.IconLocation src="../../img/icon-location.png"></S.IconLocation>
+          <Tooltip
+            placement="topRight"
+            title={props.data?.fetchBoard.youtubeUrl}
+          >
+            <S.IconLink src="../../img/icon-link.png"></S.IconLink>
+          </Tooltip>
+
+          <Tooltip
+            placement="topRight"
+            title={`${props.data?.fetchBoard.boardAddress?.address} ${props.data?.fetchBoard.boardAddress?.addressDetail}`}
+          >
+            <S.IconLocation src="../../img/icon-location.png"></S.IconLocation>
+          </Tooltip>
         </S.InBoardHeader>
         <S.InBoardBody>
           <S.InBoardTitle>{props.data?.fetchBoard.title}</S.InBoardTitle>
