@@ -33,4 +33,5 @@ export interface IFreeBoardWriteUIProps {
   isModalOpen: boolean;
   handleOk: () => void;
   handleCancel: () => void;
+  isPasswordProblem: boolean;
 }

@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Rate } from "antd";
 
 export const AllWrapper = styled.div`
   display: flex;
@@ -79,4 +80,7 @@ export const UploadButton = styled.button`
   background-color: black;
   color: white;
   margin-left: auto;
+`;
+export const Star = styled(Rate)`
+  padding-left: 20px;
 `;

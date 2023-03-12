@@ -105,7 +105,11 @@ export default function FreeBoardWriteUI(props: IFreeBoardWriteUIProps) {
           onOk={props.handleOk}
           onCancel={props.handleCancel}
         >
-          <p>수정한 내용이 없습니다</p>
+          {props.isPasswordProblem ? (
+            <p>비밀번호를 입력해주세요</p>
+          ) : (
+            <p>수정한 내용이 없습니다</p>
+          )}
         </Modal>
       </S.Wrapper>
     </S.AllWrapper>

@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
 
 export interface ICommentWriteUIProps {
   onChangeWriter: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -6,5 +6,5 @@ export interface ICommentWriteUIProps {
   onChangeContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   onClickUploadComment: () => void;
   contents: string;
-  onchangeRate: (event) => void;
+  setRating: Dispatch<SetStateAction<number>>;
 }

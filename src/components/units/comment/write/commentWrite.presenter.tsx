@@ -21,11 +21,7 @@ export default function CommentWriteUI(props: ICommentWriteUIProps) {
             placeholder="비밀번호"
             onChange={props.onChangePassword}
           ></S.UserInfo>
-          <Rate
-            onChange={props.setRating}
-            allowHalf
-            defaultValue={props.rating}
-          />
+          <S.Star onChange={props.setRating} allowHalf />
         </S.UserWrapper>
         <S.CommentWrapper>
           <S.Comment

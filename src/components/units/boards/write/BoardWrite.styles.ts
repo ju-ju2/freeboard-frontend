@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Rate } from "antd";
 import { IUploadButtonProps } from "./BoardWrite.types";
 
 export const AllWrapper = styled.div`
@@ -158,7 +159,7 @@ export const ErrorMessage = styled.div`
   margin: 10px 0 0 20px;
 `;
 
-//게시물 보여주기 페이지
+// 게시물 보여주기 페이지
 
 export const InBoardHeader = styled.div`
 display: flex;
@@ -274,4 +275,8 @@ export const InBoardButton = styled.button`
   font-size: 16px;
   font-weight: 500;
   margin: 0 12px
+`;
+
+export const Star = styled(Rate)`
+  padding-left: 20px;
 `;

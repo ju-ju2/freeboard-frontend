@@ -13,7 +13,7 @@ export default function CommentListUI(props: ICommentListUIProps) {
             <S.CommentAlign>
               <S.WriterStarWrapper>
                 <S.Writer>{el.writer}</S.Writer>
-                <Rate allowHalf value={el.rating} />
+                <S.Star allowHalf value={el.rating} disabled />
                 <S.ButtonBox>
                   <S.ModifyButton src="../../img/icon-modify.png"></S.ModifyButton>
                   <S.DeleteButton

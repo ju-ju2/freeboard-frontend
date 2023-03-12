@@ -78,7 +78,6 @@ export default function CommentWrite() {
       onClickUploadComment={onClickUploadComment}
       contents={contents}
       setRating={setRating}
-      rating={rating}
     />
   );
 }

@@ -143,6 +143,8 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
     }
   };
 
+  const [isPasswordProblem, setIsPasswordProblem] = useState(false);
+
   const onClickEdit = async () => {
     if (!title && !contents) {
       setIsModalOpen(true);
@@ -150,7 +152,9 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
       return;
     }
     if (!password) {
-      alert("비밀번호를 입력해주세요");
+      setIsModalOpen(true);
+      setIsPasswordProblem(true);
+      // alert("비밀번호를 입력해주세요");
       return;
     }
 
@@ -181,6 +185,7 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
           ? "게시글 수정이 완료되었습니다"
           : "게시글 등록이 완료되었습니다"
       );
+
       console.log(result.data?.updateBoard._id);
       router.push(`/boards/${result.data?.updateBoard._id}`);
     } catch (error) {
@@ -208,6 +213,7 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
       isModalOpen={isModalOpen}
       handleOk={handleOk}
       handleCancel={handleCancel}
+      isPasswordProblem={isPasswordProblem}
     />
   );
 }
