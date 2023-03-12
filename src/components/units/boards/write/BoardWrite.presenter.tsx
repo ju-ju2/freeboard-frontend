@@ -1,4 +1,5 @@
 import { Button, Modal } from "antd";
+import DaumPostcodeEmbed from "react-daum-postcode";
 import * as S from "./BoardWrite.styles";
 import { IFreeBoardWriteUIProps } from "./BoardWrite.types";
 
@@ -50,18 +51,53 @@ export default function FreeBoardWriteUI(props: IFreeBoardWriteUIProps) {
         <S.MainFormat>
           <S.Label>주소</S.Label>
           <S.Address__wrapper>
-            <S.AddressNum type="text" placeholder="07250"></S.AddressNum>
-            <S.AddressNum__search>우편번호검색</S.AddressNum__search>
+            <S.AddressNum
+              type="text"
+              placeholder="07250"
+              readOnly
+              defaultValue={
+                props.zipcode ||
+                props.data?.fetchBoard.boardAddress?.zipcode ||
+                ""
+              }
+            ></S.AddressNum>
+            <S.AddressNum__search onClick={props.onClickAddress}>
+              우편번호검색
+            </S.AddressNum__search>
+            {props.addressOpen && (
+              <Modal
+                open={true}
+                onOk={props.handleOk}
+                onCancel={props.handleCancel}
+              >
+                <DaumPostcodeEmbed onComplete={props.handleComplete} />
+              </Modal>
+            )}
           </S.Address__wrapper>
-          <S.Address__input></S.Address__input>
-          <S.Address__input></S.Address__input>
+          <S.Address__input
+            placeholder="주소를 입력해주세요"
+            defaultValue={
+              props.address ||
+              props.data?.fetchBoard.boardAddress?.address ||
+              ""
+            }
+          ></S.Address__input>
+          <S.Address__input
+            placeholder="상세주소를 입력해주세요"
+            onChange={props.onClickAddressDetail}
+            defaultValue={
+              props.data?.fetchBoard.boardAddress?.addressDetail || ""
+            }
+          ></S.Address__input>
           <S.ErrorMessage></S.ErrorMessage>
         </S.MainFormat>
         <S.MainFormat>
           <S.Label>유튜브</S.Label>
           <S.YoutubeLink
             type="text"
-            placeholder="링크를 복사해주세요"
+            placeholder="링크를 입력해주세요"
+            onChange={props.onChangeYoutubeUrl}
+            defaultValue={props.data?.fetchBoard.youtubeUrl || ""}
           ></S.YoutubeLink>
           <S.ErrorMessage></S.ErrorMessage>
         </S.MainFormat>

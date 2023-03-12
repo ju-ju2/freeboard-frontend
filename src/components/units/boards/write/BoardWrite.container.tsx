@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/client";
-import { Modal } from "antd";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
+import { Address } from "react-daum-postcode";
 import {
   IMutation,
   IMutationCreateBoardArgs,
@@ -16,6 +16,7 @@ import { IFreeBoardWriteProps } from "./BoardWrite.types";
 // 2. 타입 설정해주기
 
 export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
+  console.log(props.data?.fetchBoard);
   const router = useRouter();
 
   const [writer, setWriter] = useState("");
@@ -35,10 +36,12 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
 
   const handleOk = () => {
     setIsModalOpen(false);
+    setAddressOpen(false);
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    setAddressOpen(false);
   };
 
   function onChangeWriter(event: ChangeEvent<HTMLInputElement>) {
@@ -119,10 +122,16 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
         const result = await createBoard({
           variables: {
             createBoardInput: {
-              writer: writer,
-              password: password,
-              title: title,
-              contents: contents,
+              writer,
+              password,
+              title,
+              contents,
+              youtubeUrl,
+              boardAddress: {
+                zipcode,
+                address,
+                addressDetail,
+              },
               // key와 value가 같으면 value를 생략할 수 있다, shorthand-property  ex) writer, password, ~~
             },
           },
@@ -134,7 +143,7 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
             : "게시글 등록이 완료되었습니다"
         );
         console.log(result.data?.createBoard._id);
-        router.push(`/boards/${result.data?.createBoard._id}`);
+        void router.push(`/boards/${result.data?.createBoard._id}`);
       } catch (error) {
         if (error instanceof Error) {
           alert(error.message);
@@ -161,6 +170,14 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
     const updateBoardInput: IUpdateBoardInput = {};
     if (title) updateBoardInput.title = title;
     if (contents) updateBoardInput.contents = contents;
+    if (youtubeUrl) updateBoardInput.youtubeUrl = youtubeUrl;
+    if (zipcode || address || addressDetail) {
+      updateBoardInput.boardAddress = {};
+      if (zipcode) updateBoardInput.boardAddress.zipcode = zipcode;
+      if (address) updateBoardInput.boardAddress.address = address;
+      if (addressDetail)
+        updateBoardInput.boardAddress.addressDetail = addressDetail;
+    }
     // 수정된 내용이 있을때만 추가해서 뮤테이션 날려주기
 
     try {
@@ -187,12 +204,35 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
       );
 
       console.log(result.data?.updateBoard._id);
-      router.push(`/boards/${result.data?.updateBoard._id}`);
+      void router.push(`/boards/${result.data?.updateBoard._id}`);
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message);
       }
     }
+  };
+
+  const [addressOpen, setAddressOpen] = useState(false);
+  const onClickAddress = () => {
+    setAddressOpen(true);
+  };
+
+  const [zipcode, setZipcode] = useState("");
+  const [address, setAddress] = useState("");
+  const [addressDetail, setAddressDetail] = useState("");
+  const [youtubeUrl, setYoutubeUrl] = useState("");
+  const handleComplete = (address: Address) => {
+    setAddress(address.address);
+    setZipcode(address.zonecode);
+    setAddressOpen(false);
+  };
+
+  const onClickAddressDetail = (event: ChangeEvent<HTMLInputElement>) => {
+    setAddressDetail(event.target.value);
+  };
+
+  const onChangeYoutubeUrl = (event: ChangeEvent<HTMLInputElement>) => {
+    setYoutubeUrl(event.target.value);
   };
 
   return (
@@ -214,6 +254,13 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
       handleOk={handleOk}
       handleCancel={handleCancel}
       isPasswordProblem={isPasswordProblem}
+      handleComplete={handleComplete}
+      onClickAddress={onClickAddress}
+      addressOpen={addressOpen}
+      address={address}
+      zipcode={zipcode}
+      onClickAddressDetail={onClickAddressDetail}
+      onChangeYoutubeUrl={onChangeYoutubeUrl}
     />
   );
 }

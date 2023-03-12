@@ -1,5 +1,6 @@
 import { ModalStaticFunctions } from "antd/es/modal/confirm";
 import { ChangeEvent } from "react";
+import { Address } from "react-daum-postcode";
 import { IQuery } from "../../../../commons/types/generated/types";
 
 export interface IFreeBoardWriteProps {
@@ -34,4 +35,13 @@ export interface IFreeBoardWriteUIProps {
   handleOk: () => void;
   handleCancel: () => void;
   isPasswordProblem: boolean;
+  addressOpen: boolean;
+  onClickAddress: () => void;
+  handleComplete: (address: Address) => void;
+  zipcode: string;
+  address: string;
+  addressDetail: string;
+  onClickAddressDetail: (event: ChangeEvent<HTMLInputElement>) => void;
+  youtubeUrl: string;
+  onChangeYoutubeUrl: (event: ChangeEvent<HTMLInputElement>) => void;
 }
