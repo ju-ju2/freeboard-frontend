@@ -55,7 +55,7 @@ export default function FreeBoardWriteUI(props: IFreeBoardWriteUIProps) {
               type="text"
               placeholder="07250"
               readOnly
-              defaultValue={
+              value={
                 props.zipcode ||
                 props.data?.fetchBoard.boardAddress?.zipcode ||
                 ""
@@ -76,7 +76,8 @@ export default function FreeBoardWriteUI(props: IFreeBoardWriteUIProps) {
           </S.Address__wrapper>
           <S.Address__input
             placeholder="주소를 입력해주세요"
-            defaultValue={
+            readOnly
+            value={
               props.address ||
               props.data?.fetchBoard.boardAddress?.address ||
               ""

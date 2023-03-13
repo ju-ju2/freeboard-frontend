@@ -142,6 +142,11 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
             ? "게시글 수정이 완료되었습니다"
             : "게시글 등록이 완료되었습니다"
         );
+
+        if (typeof result.data?.createBoard._id !== "string") {
+          alert("서버에 문제가 있습니다.");
+          return;
+        }
         console.log(result.data?.createBoard._id);
         void router.push(`/boards/${result.data?.createBoard._id}`);
       } catch (error) {
@@ -155,7 +160,14 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
   const [isPasswordProblem, setIsPasswordProblem] = useState(false);
 
   const onClickEdit = async () => {
-    if (!title && !contents) {
+    if (
+      !title &&
+      !contents &&
+      !youtubeUrl &&
+      !zipcode &&
+      !address &&
+      !addressDetail
+    ) {
       setIsModalOpen(true);
       // alert("수정한 내용이 없습니다");
       return;
@@ -203,6 +215,10 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
           : "게시글 등록이 완료되었습니다"
       );
 
+      if (typeof result.data?.updateBoard._id !== "string") {
+        alert("서버에 문제가 있습니다.");
+        return;
+      }
       console.log(result.data?.updateBoard._id);
       void router.push(`/boards/${result.data?.updateBoard._id}`);
     } catch (error) {
