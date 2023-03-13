@@ -42,6 +42,22 @@ export default function BoardListUI(props: IBoardListUIProps) {
             </S.ListRow>
           ))}
         </S.BoardListWrapper>
+        <S.PageNumberWrapper>
+          <S.ToPre onClick={props.onClickToPre} />
+          {new Array(10).fill(1).map(
+            (el, index) =>
+              props.startPage + index <= props.lastPage && (
+                <S.PageNumber
+                  onClick={props.onClickPageNumber}
+                  key={index + props.startPage}
+                  id={String(index + props.startPage)}
+                >
+                  {index + props.startPage}
+                </S.PageNumber>
+              )
+          )}
+          <S.ToNext onClick={props.onClickToNext} />
+        </S.PageNumberWrapper>
         <S.List_uploadButton>
           <S.IconWrite src="../../img/icon-write.png"></S.IconWrite>
           <S.ButtonText onClick={props.onClickWriteBoard}>
