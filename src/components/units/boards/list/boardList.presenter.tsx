@@ -1,5 +1,5 @@
 import { GetDate } from "../../../../commons/utils/utils";
-import PageNation01 from "../../../commons/pagenation/01";
+import PageNation01 from "../../../commons/pagenation/01/pagenation01.container";
 import * as S from "./BoardList.styles";
 import { IBoardListUIProps } from "./boardList.types";
 
