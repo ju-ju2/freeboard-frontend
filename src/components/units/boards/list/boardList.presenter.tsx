@@ -44,13 +44,13 @@ export default function BoardListUI(props: IBoardListUIProps) {
             </S.ListRow>
           ))}
         </S.BoardListWrapper>
-        <PageNation01 count={props.count} refetch={props.refetch} />
-        <S.List_uploadButton>
-          <S.IconWrite src="../../img/icon-write.png"></S.IconWrite>
-          <S.ButtonText onClick={props.onClickWriteBoard}>
+        <S.FooterWrapper>
+          <PageNation01 count={props.count} refetch={props.refetch} />
+          <S.UploadButton onClick={props.onClickWriteBoard}>
+            <S.IconWrite src="../../img/icon-write.png"></S.IconWrite>
             게시물 등록하기
-          </S.ButtonText>
-        </S.List_uploadButton>
+          </S.UploadButton>
+        </S.FooterWrapper>
       </S.ListWrapper>
       ;
     </>

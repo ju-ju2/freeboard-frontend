@@ -10,7 +10,6 @@ export const PageNumberWrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-bottom: 40px;
 `;
 export const PageNumber = styled.div`
   font-size: 16px;
@@ -30,7 +29,7 @@ export const ToNext = styled(RightOutlined)`
   cursor: pointer;
   padding: 3px 30px;
   :hover {
-    color: orange;
+    color: gray;
   }
 `;
 export const ToPre = styled(LeftOutlined)`
@@ -38,6 +37,6 @@ export const ToPre = styled(LeftOutlined)`
   cursor: pointer;
   padding: 3px 30px;
   :hover {
-    color: orange;
+    color: gray;
   }
 `;

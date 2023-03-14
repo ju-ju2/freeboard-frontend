@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 
 export const ListWrapper = styled.div`
   display: flex;
@@ -124,11 +123,11 @@ export const ColumnTitle = styled.div`
   text-align: center;
 
   :hover {
-    color: blue;
+    color: orange;
   }
 `;
 
-export const List_uploadButton = styled.button`
+export const UploadButton = styled.button`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -138,6 +137,9 @@ export const List_uploadButton = styled.button`
   background: #ffffff;
   border: 1px solid #f2f2f2;
   border-radius: 10px;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
 `;
 export const IconWrite = styled.img`
   width: 18px;
@@ -145,40 +147,10 @@ export const IconWrite = styled.img`
   margin-right: 12px;
 `;
 
-export const ButtonText = styled.span`
-  font-weight: 500;
-  font-size: 16px;
-`;
-export const PageNumberWrapper = styled.div`
+export const FooterWrapper = styled.div`
+  width: 1200px;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 40px;
-`;
-export const PageNumber = styled.div`
-  font-size: 16px;
-  width: 40px;
-  cursor: pointer;
-
-  :hover {
-    color: orange;
-    text-decoration: underline;
-  }
-`;
-export const ToNext = styled(RightOutlined)`
-  height: 18px;
-  cursor: pointer;
-  padding: 3px 30px;
-  :hover {
-    color: orange;
-  }
-`;
-export const ToPre = styled(LeftOutlined)`
-  height: 18px;
-  cursor: pointer;
-  padding: 3px 30px;
-  :hover {
-    color: orange;
-  }
 `;
