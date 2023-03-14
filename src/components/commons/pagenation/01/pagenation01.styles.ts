@@ -1,6 +1,10 @@
 import styled from "@emotion/styled";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 
+interface IPageNumberProps {
+  isActive: boolean;
+}
+
 export const PageNumberWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -14,9 +18,12 @@ export const PageNumber = styled.div`
   cursor: pointer;
 
   :hover {
-    color: orange;
-    text-decoration: underline;
+    color: gray;
   }
+
+  color: ${(props: IPageNumberProps) => (props.isActive ? "orange" : "black")};
+  text-decoration: ${(props: IPageNumberProps) =>
+    props.isActive ? "underline" : "none"};
 `;
 export const ToNext = styled(RightOutlined)`
   height: 18px;

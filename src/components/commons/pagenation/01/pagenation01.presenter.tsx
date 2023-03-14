@@ -13,6 +13,8 @@ export default function PageNation01UI(props: IPageNation01UIProps) {
                 onClick={props.onClickPageNumber}
                 key={index + props.startPage}
                 id={String(index + props.startPage)}
+                isActive={props.startPage + index === props.activedPage}
+                // 활성화된 페이지 넘버에 색을 주기 위해서 isActive추가
               >
                 {index + props.startPage}
               </S.PageNumber>
