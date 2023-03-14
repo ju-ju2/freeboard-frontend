@@ -76,7 +76,6 @@ export const StringNum = styled.div`
 export const UploadButton = styled.button`
   width: 91px;
   height: 52px;
-  padding: 20px;
   background-color: black;
   color: white;
   margin-left: auto;

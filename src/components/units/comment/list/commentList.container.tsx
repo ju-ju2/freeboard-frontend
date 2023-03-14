@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import { MouseEvent } from "react";
+import { ChangeEvent, MouseEvent, useState } from "react";
 import {
   IMutation,
   IMutationDeleteBoardCommentArgs,
@@ -14,7 +14,10 @@ import {
 } from "./commentList.queries";
 
 export default function CommentList() {
-  // const { data } = useQuery(FETCH_BOARDS);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [myPassword, setMyPassword] = useState("");
+  const [myBoardId, setMyBoardId] = useState("");
+
   const router = useRouter();
   const { data } = useQuery<
     Pick<IQuery, "fetchBoardComments">,
@@ -30,16 +33,24 @@ export default function CommentList() {
     IMutationDeleteBoardCommentArgs
   >(DELETE_BOARD_COMMENT);
 
-  const onClickDelete = async (event: MouseEvent<HTMLImageElement>) => {
-    event.stopPropagation();
-    // 이벤트버블링(자식에게 onClick이 실행되면 부모 onClick이 실행된다)을 막기위한 명령
+  const onClickOpenDeleteModal = async (
+    event: MouseEvent<HTMLImageElement>
+  ) => {
+    if (!(event.target instanceof HTMLImageElement)) return;
+    setMyBoardId(event.target.id);
+    setIsDeleteModalOpen((prev) => !prev);
+  };
 
-    const myPassword = prompt("비밀번호를 입력하세요");
+  const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
+    setMyPassword(event.target.value);
+  };
+
+  const onClickDelete = async (event: MouseEvent<HTMLImageElement>) => {
     try {
       await deleteBoardComment({
         variables: {
           password: myPassword,
-          boardCommentId: event.currentTarget.id,
+          boardCommentId: myBoardId,
         },
         refetchQueries: [
           {
@@ -53,18 +64,22 @@ export default function CommentList() {
         alert(error.message);
       }
     }
+    setIsDeleteModalOpen((prev) => !prev);
   };
 
-  const onClickComment = (event: MouseEvent<HTMLDivElement>) => {
-    alert(`${event.currentTarget.id}님이 작성한 글입니다.`);
-    //event.currentTarget = 버블링 이벤트로 인해 어디를 클릭해도 onClick이 실행된 id를 선택한다.
-  };
+  // const onClickComment = (event: MouseEvent<HTMLDivElement>) => {
+  //   alert(`${event.currentTarget.id}님이 작성한 글입니다.`);
+  //   // event.currentTarget = 버블링 이벤트로 인해 어디를 클릭해도 onClick이 실행된 id를 선택한다.
+  // };
 
   return (
     <CommentListUI
       data={data}
+      onClickOpenDeleteModal={onClickOpenDeleteModal}
+      // onClickComment={onClickComment}
+      isDeleteModalOpen={isDeleteModalOpen}
+      onChangePassword={onChangePassword}
       onClickDelete={onClickDelete}
-      onClickComment={onClickComment}
     />
   );
 }
