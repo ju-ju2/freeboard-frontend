@@ -72,6 +72,7 @@ export default function CommentList() {
   //   // event.currentTarget = 버블링 이벤트로 인해 어디를 클릭해도 onClick이 실행된 id를 선택한다.
   // };
 
+  const onClickModify = () => {};
   return (
     <CommentListUI
       data={data}
@@ -80,6 +81,7 @@ export default function CommentList() {
       isDeleteModalOpen={isDeleteModalOpen}
       onChangePassword={onChangePassword}
       onClickDelete={onClickDelete}
+      onClickModify={onClickModify}
     />
   );
 }

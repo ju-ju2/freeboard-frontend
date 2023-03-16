@@ -8,4 +8,5 @@ export interface ICommentListUIProps {
   isDeleteModalOpen: boolean;
   onChangePassword: (event: ChangeEvent<HTMLInputElement>) => void;
   onClickDelete: any;
+  onClickModify: any;
 }
