@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import { firebaseApp } from "../../../../../pages/firebaseBoards";
+import { firebaseApp } from "../../../../commons/libraries/firebase";
 
 // //////////////////CSS/////////////////////
 export const Wrapper = styled.div`

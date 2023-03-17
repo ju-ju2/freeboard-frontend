@@ -5,7 +5,7 @@ import { ChangeEvent, useState } from "react";
 import { addDoc, collection, getFirestore } from "firebase/firestore/lite";
 import { useRouter } from "next/router";
 import { GetDateHour } from "../../../../commons/utils/utils";
-import { firebaseApp } from "../../../../../pages/firebaseBoards";
+import { firebaseApp } from "../../../../commons/libraries/firebase";
 
 export const Wrapper = styled.div`
   width: 1200px;
