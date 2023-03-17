@@ -1,16 +1,15 @@
 import styled from "@emotion/styled";
-import FirebaseBoardsListUI from "./firebaseBoardsList.presenter";
 import {
   collection,
   DocumentData,
   getDocs,
   getFirestore,
 } from "firebase/firestore/lite";
-import { firebaseApp } from "../../../../../pages/_app";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import { firebaseApp } from "../../../../../pages/firebaseBoards";
 
 // //////////////////CSS/////////////////////
 export const Wrapper = styled.div`

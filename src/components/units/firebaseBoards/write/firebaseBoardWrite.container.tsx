@@ -3,9 +3,9 @@ import { UserOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
 import { ChangeEvent, useState } from "react";
 import { addDoc, collection, getFirestore } from "firebase/firestore/lite";
-import { firebaseApp } from "../../../../../pages/_app";
 import { useRouter } from "next/router";
 import { GetDateHour } from "../../../../commons/utils/utils";
+import { firebaseApp } from "../../../../../pages/firebaseBoards";
 
 export const Wrapper = styled.div`
   width: 1200px;
