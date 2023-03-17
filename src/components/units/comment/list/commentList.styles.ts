@@ -5,7 +5,7 @@ export const AllWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 100px;
+  /* margin-bottom: 100px; */
 `;
 
 export const Container = styled.div`

@@ -17,3 +17,21 @@ export const CREATE_BOARD_COMMENT = gql`
     }
   }
 `;
+
+export const UPDATE_BOARD_COMMENT = gql`
+  mutation typeSetting(
+    $password: String
+    $boardCommentId: ID!
+    $updateBoardCommentInput: UpdateBoardCommentInput!
+  ) {
+    updateBoardComment(
+      password: $password
+      boardCommentId: $boardCommentId
+      updateBoardCommentInput: $updateBoardCommentInput
+    ) {
+      writer
+      contents
+      _id
+    }
+  }
+`;

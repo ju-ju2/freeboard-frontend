@@ -4,9 +4,17 @@ import { ChangeEvent, useState } from "react";
 import {
   IMutation,
   IMutationCreateBoardCommentArgs,
+  IMutationUpdateBoardCommentArgs,
 } from "../../../../commons/types/generated/types";
 import CommentWriteUI from "./commentWrite.presenter";
-import { CREATE_BOARD_COMMENT } from "./commentWrite.queries";
+import {
+  CREATE_BOARD_COMMENT,
+  UPDATE_BOARD_COMMENT,
+} from "./commentWrite.queries";
+import {
+  ICommentWriteProps,
+  IUpdateBoardCommentInput,
+} from "./commentWrite.types";
 
 export const FETCH_BOARD_COMMENTS = gql`
   query typeSetting($boardId: ID!) {
@@ -20,8 +28,12 @@ export const FETCH_BOARD_COMMENTS = gql`
   }
 `;
 
-export default function CommentWrite() {
+export default function CommentWrite(props: ICommentWriteProps) {
   const router = useRouter();
+  const [writer, setWriter] = useState("");
+  const [password, setPassword] = useState("");
+  const [contents, setContents] = useState("");
+  const [rating, setRating] = useState(0);
 
   // const [createBoardComment] = useMutation(CREATE_BOARD_COMMENT);
   const [createBoardComment] = useMutation<
@@ -29,10 +41,10 @@ export default function CommentWrite() {
     IMutationCreateBoardCommentArgs
   >(CREATE_BOARD_COMMENT);
 
-  const [writer, setWriter] = useState("");
-  const [password, setPassword] = useState("");
-  const [contents, setContents] = useState("");
-  const [rating, setRating] = useState(0);
+  const [updateBoardComment] = useMutation<
+    Pick<IMutation, "updateBoardComment">,
+    IMutationUpdateBoardCommentArgs
+  >(UPDATE_BOARD_COMMENT);
 
   const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
     setWriter(event.target.value);
@@ -45,6 +57,19 @@ export default function CommentWrite() {
   };
 
   const onClickUploadComment = async () => {
+    if (!writer) {
+      alert("작성자를 입력하지 않았습니다");
+      return;
+    }
+    if (!password) {
+      alert("비밀번호가 입력되지 않았습니다");
+      return;
+    }
+    if (!contents) {
+      alert("내용이 입력되지 않았습니다");
+      return;
+    }
+
     try {
       await createBoardComment({
         variables: {
@@ -68,6 +93,44 @@ export default function CommentWrite() {
         alert(error.message);
       }
     }
+
+    setWriter("");
+    setPassword("");
+    setContents("");
+    setRating(0);
+  };
+
+  const onClickUpdateComment = async () => {
+    if (!contents) {
+      alert("수정된 내용이 없습니다");
+      return;
+    }
+    if (!password) {
+      alert("비밀번호가 입력되지 않았습니다");
+      return;
+    }
+    try {
+      const updateBoardCommentInput: IUpdateBoardCommentInput = {};
+      if (contents) updateBoardCommentInput.contents = contents;
+      if (rating !== props.el?.rating) updateBoardCommentInput.rating = rating;
+
+      await updateBoardComment({
+        variables: {
+          updateBoardCommentInput,
+          password,
+          boardCommentId: props.el?._id,
+        },
+        refetchQueries: [
+          {
+            query: FETCH_BOARD_COMMENTS,
+            variables: { boardId: router.query.boardId },
+          },
+        ],
+      });
+      props.setIsEdit?.(false);
+    } catch (error) {
+      if (error instanceof Error) alert(error.message);
+    }
   };
 
   return (
@@ -76,8 +139,14 @@ export default function CommentWrite() {
       onChangePassword={onChangePassword}
       onChangeContents={onChangeContents}
       onClickUploadComment={onClickUploadComment}
+      onClickUpdateComment={onClickUpdateComment}
+      writer={writer}
       contents={contents}
+      password={password}
       setRating={setRating}
+      rating={rating}
+      isEdit={props.isEdit}
+      el={props.el}
     />
   );
 }

@@ -83,3 +83,9 @@ export const UploadButton = styled.button`
 export const Star = styled(Rate)`
   padding-left: 20px;
 `;
+
+export const InnerContainer = styled.div`
+  width: 1200px;
+  display: flex;
+  flex-direction: column;
+`;
