@@ -75,7 +75,7 @@ export const Contents = styled.textarea`
   padding: 20px;
 `;
 
-export const Address__wrapper = styled.div`
+export const AddressWrapper = styled.div`
   display: flex;
   flex-direction: row;
 `;
@@ -88,7 +88,7 @@ export const AddressNum = styled.input`
   padding-left: 20px;
 `;
 
-export const AddressNum__search = styled.button`
+export const AddressNumSearch = styled.button`
   width: 124px;
   height: 52px;
   border: 1px solid black;
@@ -96,7 +96,7 @@ export const AddressNum__search = styled.button`
   color: white;
 `;
 
-export const Address__input = styled.input`
+export const AddressInput = styled.input`
   width: 996px;
   height: 52px;
   border: 1px solid #bdbdbd;
@@ -112,21 +112,26 @@ export const YoutubeLink = styled.input`
   padding-left: 20px;
 `;
 
-export const Picture__wrapper = styled.div`
+export const PictureWrapper = styled.div`
   width: 996px;
   display: flex;
   flex-direction: row;
   margin-bottom: 10px;
 `;
-export const Upload__picture = styled.button`
+export const UploadPicture = styled.div`
   width: 78px;
   height: 78px;
   background-color: #bdbdbd;
   border: none;
   margin-right: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 `;
 
-export const Radio__wrapper = styled.div`
+export const RadioWrapper = styled.div`
   width: 996px;
   display: flex;
   flex-direction: row;
@@ -142,7 +147,7 @@ export const RadioLabel = styled.label`
   margin: 0 10px;
 `;
 
-export const Upload__button = styled.button`
+export const UploadButton = styled.button`
   width: 179px;
   height: 52px;
   // background-color: #ffd600;
@@ -162,20 +167,19 @@ export const ErrorMessage = styled.div`
 // 게시물 보여주기 페이지
 
 export const InBoardHeader = styled.div`
-display: flex;
-flex-direction: row
-align-items: center;
-width: 996px;
-padding-bottom: 30px;
-border-bottom: 1px solid #BDBDBD;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 996px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #bdbdbd;
 `;
 
 export const NameDateWrapper = styled.div`
-display: flex
-flex-direction: column;
-// justify-content: space-between;
-margin-right: auto;
-
+  display: flex;
+  flex-direction: column;
+  // justify-content: space-between;
+  margin-right: auto;
 `;
 export const InBoardWriter = styled.div`
   font-size: 24px;
@@ -262,7 +266,7 @@ export const DislikeNum = styled.div`
 export const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-contents: center;
+  justify-content: center;
   align-items: center;
   margin-bottom: 100px;
 `;
@@ -271,10 +275,10 @@ export const InBoardButton = styled.button`
   width: 179px;
   height: 52px;
   background-color: white;
-  border: 1px solid #BDBDBD
+  border: 1px solid #bdbdbd;
   font-size: 16px;
   font-weight: 500;
-  margin: 0 12px
+  margin: 0 12px;
 `;
 
 export const Star = styled(Rate)`

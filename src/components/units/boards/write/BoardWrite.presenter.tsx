@@ -50,7 +50,7 @@ export default function FreeBoardWriteUI(props: IFreeBoardWriteUIProps) {
         </S.MainFormat>
         <S.MainFormat>
           <S.Label>주소</S.Label>
-          <S.Address__wrapper>
+          <S.AddressWrapper>
             <S.AddressNum
               type="text"
               placeholder="07250"
@@ -61,9 +61,9 @@ export default function FreeBoardWriteUI(props: IFreeBoardWriteUIProps) {
                 ""
               }
             ></S.AddressNum>
-            <S.AddressNum__search onClick={props.onClickAddress}>
+            <S.AddressNumSearch onClick={props.onClickAddress}>
               우편번호검색
-            </S.AddressNum__search>
+            </S.AddressNumSearch>
             {props.addressOpen && (
               <Modal
                 open={true}
@@ -73,8 +73,8 @@ export default function FreeBoardWriteUI(props: IFreeBoardWriteUIProps) {
                 <DaumPostcodeEmbed onComplete={props.handleComplete} />
               </Modal>
             )}
-          </S.Address__wrapper>
-          <S.Address__input
+          </S.AddressWrapper>
+          <S.AddressInput
             placeholder="주소를 입력해주세요"
             readOnly
             value={
@@ -82,14 +82,14 @@ export default function FreeBoardWriteUI(props: IFreeBoardWriteUIProps) {
               props.data?.fetchBoard.boardAddress?.address ||
               ""
             }
-          ></S.Address__input>
-          <S.Address__input
+          ></S.AddressInput>
+          <S.AddressInput
             placeholder="상세주소를 입력해주세요"
             onChange={props.onClickAddressDetail}
             defaultValue={
               props.data?.fetchBoard.boardAddress?.addressDetail || ""
             }
-          ></S.Address__input>
+          ></S.AddressInput>
           <S.ErrorMessage></S.ErrorMessage>
         </S.MainFormat>
         <S.MainFormat>
@@ -104,15 +104,25 @@ export default function FreeBoardWriteUI(props: IFreeBoardWriteUIProps) {
         </S.MainFormat>
         <S.MainFormat>
           <S.Label>사진첨부</S.Label>
-          <S.Picture__wrapper>
-            <S.Upload__picture>+</S.Upload__picture>
-            <S.Upload__picture>+</S.Upload__picture>
-            <S.Upload__picture>+</S.Upload__picture>
-          </S.Picture__wrapper>
+          <S.PictureWrapper>
+            <S.UploadPicture onClick={props.onClickFile}>+</S.UploadPicture>
+            <S.UploadPicture>+</S.UploadPicture>
+            <S.UploadPicture>+</S.UploadPicture>
+            <input
+              style={{ display: "none" }}
+              ref={props.fileRef}
+              type="file"
+              onChange={props.onChangeFile}
+            ></input>
+            <img
+              style={{ width: "78px", height: "78px" }}
+              src={`https://storage.googleapis.com/${props.imageUrl}`}
+            ></img>
+          </S.PictureWrapper>
         </S.MainFormat>
         <S.MainFormat>
           <S.Label>메인 설정</S.Label>
-          <S.Radio__wrapper>
+          <S.RadioWrapper>
             <S.RadioButton
               type="radio"
               id="youtube"
@@ -127,15 +137,15 @@ export default function FreeBoardWriteUI(props: IFreeBoardWriteUIProps) {
               value="사진"
             ></S.RadioButton>
             <S.RadioLabel htmlFor="image">사진</S.RadioLabel>
-          </S.Radio__wrapper>
+          </S.RadioWrapper>
         </S.MainFormat>
-        <S.Upload__button
+        <S.UploadButton
           onClick={props.isEdit ? props.onClickEdit : props.onClickUpload}
           isActive={props.isEdit ? true : props.isActive}
           // 게시글은 일부만 수정해도 수정되기 때문에 늘 노란색을 띄고 있도록
         >
           {props.isEdit ? "수정하기" : "등록하기"}
-        </S.Upload__button>
+        </S.UploadButton>
         <Modal
           title="error"
           open={props.isModalOpen}

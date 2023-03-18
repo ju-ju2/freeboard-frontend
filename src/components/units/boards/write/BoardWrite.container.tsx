@@ -1,15 +1,16 @@
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { Address } from "react-daum-postcode";
 import {
   IMutation,
   IMutationCreateBoardArgs,
   IMutationUpdateBoardArgs,
+  IMutationUploadFileArgs,
   IUpdateBoardInput,
 } from "../../../../commons/types/generated/types";
 import FreeBoardWriteUI from "./BoardWrite.presenter";
-import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
+import { CREATE_BOARD, UPDATE_BOARD, UPLOAD_FILE } from "./BoardWrite.queries";
 import { IFreeBoardWriteProps } from "./BoardWrite.types";
 
 // 1. 함수 위에서 mutation 가져오기 (대소문자 상관없다)
@@ -29,6 +30,8 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
   const [passwordError, setPasswordError] = useState("");
   const [titleError, setTitleError] = useState("");
   const [contentsError, setContentsError] = useState("");
+
+  const [imageUrl, setImageUrl] = useState("");
 
   const [isActive, setIsActive] = useState(false);
 
@@ -102,6 +105,22 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
     Pick<IMutation, "updateBoard">,
     IMutationUpdateBoardArgs
   >(UPDATE_BOARD);
+  const [uploadFile] = useMutation<
+    Pick<IMutation, "uploadFile">,
+    IMutationUploadFileArgs
+  >(UPLOAD_FILE);
+
+  const onChangeFile = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+
+    const result = await uploadFile({
+      variables: {
+        file,
+      },
+    });
+    console.log(file);
+    setImageUrl(result.data?.uploadFile.url);
+  };
 
   // 4. async와 await를 사용해서 동기적 함수 만들기, 3번을 실행하는 로직
   const onClickUpload = async () => {
@@ -251,6 +270,10 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
     setYoutubeUrl(event.target.value);
   };
 
+  const fileRef = useRef<HTMLInputElement>(null);
+  const onClickFile = () => {
+    fileRef.current?.click();
+  };
   return (
     <FreeBoardWriteUI
       onChangeWriter={onChangeWriter}
@@ -277,6 +300,10 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
       zipcode={zipcode}
       onClickAddressDetail={onClickAddressDetail}
       onChangeYoutubeUrl={onChangeYoutubeUrl}
+      onChangeFile={onChangeFile}
+      imageUrl={imageUrl}
+      fileRef={fileRef}
+      onClickFile={onClickFile}
     />
   );
 }
