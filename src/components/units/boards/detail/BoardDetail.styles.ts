@@ -17,23 +17,22 @@ export const Wrapper = styled.div`
   //   background-color: red;
 `;
 
-//게시물 보여주기 페이지
+//  게시물 보여주기 페이지
 
 export const InBoardHeader = styled.div`
-display: flex;
-flex-direction: row
-align-items: center;
-width: 996px;
-padding-bottom: 30px;
-border-bottom: 1px solid #BDBDBD;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 996px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #bdbdbd;
 `;
 
 export const NameDateWrapper = styled.div`
-display: flex
-flex-direction: column;
-// justify-content: space-between;
-margin-right: auto;
-
+  display: flex;
+  flex-direction: column;
+  // justify-content: space-between;
+  margin-right: auto;
 `;
 export const InBoardWriter = styled.div`
   font-size: 24px;
@@ -78,11 +77,11 @@ export const InBoardTitle = styled.div`
   font-weight: 700;
   margin-bottom: 40px;
 `;
-export const InBoardContentsImg = styled.div`
+export const InBoardContentsImg = styled.img`
+  margin-bottom: 40px;
   width: 996px;
   height: 408px;
-  background-color: gray;
-  margin-bottom: 40px;
+  object-fit: contain;
 `;
 export const InBoardContents = styled.div`
   font-size: 16px;
@@ -121,7 +120,7 @@ export const DislikeNum = styled.div`
 export const ButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justify-contents: center;
+  justify-content: center;
   align-items: center;
   margin-bottom: 100px;
 `;
@@ -130,8 +129,8 @@ export const InBoardButton = styled.button`
   width: 179px;
   height: 52px;
   background-color: white;
-  border: 1px solid #BDBDBD
+  border: 1px solid #bdbdbd;
   font-size: 16px;
   font-weight: 500;
-  margin: 0 12px
+  margin: 0 12px;
 `;

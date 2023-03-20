@@ -31,7 +31,14 @@ export default function FreeBoardDetailUI(props: IFreeBoardDetailUIProps) {
         </S.InBoardHeader>
         <S.InBoardBody>
           <S.InBoardTitle>{props.data?.fetchBoard.title}</S.InBoardTitle>
-          <S.InBoardContentsImg></S.InBoardContentsImg>
+          {props.data?.fetchBoard.images
+            ?.filter((el: string) => el)
+            .map((el: string) => (
+              <S.InBoardContentsImg
+                key={el}
+                src={`https://storage.googleapis.com/${el}`}
+              ></S.InBoardContentsImg>
+            ))}
           <S.InBoardContents>
             {props.data?.fetchBoard.contents}
           </S.InBoardContents>

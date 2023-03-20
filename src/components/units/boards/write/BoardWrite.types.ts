@@ -10,6 +10,13 @@ export interface IFreeBoardWriteProps {
 export interface IUpdateBoardInput {
   title?: string;
   contents?: string;
+  youtubeUrl?: string;
+  boardAddress?: {
+    zipcode?: string;
+    address?: string;
+    addressDetail?: string;
+  };
+  images: string[];
 }
 
 export interface IUploadButtonProps {
@@ -43,8 +50,6 @@ export interface IFreeBoardWriteUIProps {
   onClickAddressDetail: (event: ChangeEvent<HTMLInputElement>) => void;
   // youtubeUrl: string;
   onChangeYoutubeUrl: (event: ChangeEvent<HTMLInputElement>) => void;
-  onChangeFile: (event: ChangeEvent<HTMLInputElement>) => void;
-  imageUrl: string;
-  fileRef: any;
-  onClickFile: () => void;
+  onChangeImageUrls: (imageUrl: string, index: number) => void;
+  imageUrls: string[];
 }

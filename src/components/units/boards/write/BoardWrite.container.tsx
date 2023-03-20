@@ -1,16 +1,15 @@
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Address } from "react-daum-postcode";
 import {
   IMutation,
   IMutationCreateBoardArgs,
   IMutationUpdateBoardArgs,
-  IMutationUploadFileArgs,
   IUpdateBoardInput,
 } from "../../../../commons/types/generated/types";
 import FreeBoardWriteUI from "./BoardWrite.presenter";
-import { CREATE_BOARD, UPDATE_BOARD, UPLOAD_FILE } from "./BoardWrite.queries";
+import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
 import { IFreeBoardWriteProps } from "./BoardWrite.types";
 
 // 1. 함수 위에서 mutation 가져오기 (대소문자 상관없다)
@@ -31,7 +30,7 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
   const [titleError, setTitleError] = useState("");
   const [contentsError, setContentsError] = useState("");
 
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrls, setImageUrls] = useState(["", "", ""]);
 
   const [isActive, setIsActive] = useState(false);
 
@@ -105,22 +104,6 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
     Pick<IMutation, "updateBoard">,
     IMutationUpdateBoardArgs
   >(UPDATE_BOARD);
-  const [uploadFile] = useMutation<
-    Pick<IMutation, "uploadFile">,
-    IMutationUploadFileArgs
-  >(UPLOAD_FILE);
-
-  const onChangeFile = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-
-    const result = await uploadFile({
-      variables: {
-        file,
-      },
-    });
-    console.log(file);
-    setImageUrl(result.data?.uploadFile.url);
-  };
 
   // 4. async와 await를 사용해서 동기적 함수 만들기, 3번을 실행하는 로직
   const onClickUpload = async () => {
@@ -146,6 +129,7 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
               title,
               contents,
               youtubeUrl,
+              images: [...imageUrls],
               boardAddress: {
                 zipcode,
                 address,
@@ -166,7 +150,8 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
           alert("서버에 문제가 있습니다.");
           return;
         }
-        console.log(result.data?.createBoard._id);
+        console.log(result.data?.createBoard);
+        console.log(result.data?.createBoard);
         void router.push(`/boards/${result.data?.createBoard._id}`);
       } catch (error) {
         if (error instanceof Error) {
@@ -179,13 +164,21 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
   const [isPasswordProblem, setIsPasswordProblem] = useState(false);
 
   const onClickEdit = async () => {
+    // 배열이 같은지를 비교하기 위해 문자열로 바꿔서 비교한다.
+    const currentFile = JSON.stringify(imageUrls); // ["", "", ""]
+    const defaultFile = JSON.stringify(props.data?.fetchBoard.images); // ["", "", "강아지.png"]
+
+    // true/false를 반환한다.
+    const isChangedFiles = currentFile !== defaultFile;
+
     if (
       !title &&
       !contents &&
       !youtubeUrl &&
       !zipcode &&
       !address &&
-      !addressDetail
+      !addressDetail &&
+      !isChangedFiles
     ) {
       setIsModalOpen(true);
       // alert("수정한 내용이 없습니다");
@@ -199,6 +192,7 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
     }
 
     const updateBoardInput: IUpdateBoardInput = {};
+
     if (title) updateBoardInput.title = title;
     if (contents) updateBoardInput.contents = contents;
     if (youtubeUrl) updateBoardInput.youtubeUrl = youtubeUrl;
@@ -209,6 +203,7 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
       if (addressDetail)
         updateBoardInput.boardAddress.addressDetail = addressDetail;
     }
+    if (isChangedFiles) updateBoardInput.images = imageUrls;
     // 수정된 내용이 있을때만 추가해서 뮤테이션 날려주기
 
     try {
@@ -270,10 +265,18 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
     setYoutubeUrl(event.target.value);
   };
 
-  const fileRef = useRef<HTMLInputElement>(null);
-  const onClickFile = () => {
-    fileRef.current?.click();
+  const onChangeImageUrls = (imageUrl: string, index: number) => {
+    const NewImageUrls = [...imageUrls];
+    NewImageUrls[index] = imageUrl;
+    setImageUrls(NewImageUrls);
   };
+
+  useEffect(() => {
+    if (props.data?.fetchBoard.images?.length) {
+      setImageUrls([...props.data?.fetchBoard.images]);
+    }
+  }, [props.data]);
+
   return (
     <FreeBoardWriteUI
       onChangeWriter={onChangeWriter}
@@ -300,10 +303,8 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
       zipcode={zipcode}
       onClickAddressDetail={onClickAddressDetail}
       onChangeYoutubeUrl={onChangeYoutubeUrl}
-      onChangeFile={onChangeFile}
-      imageUrl={imageUrl}
-      fileRef={fileRef}
-      onClickFile={onClickFile}
+      onChangeImageUrls={onChangeImageUrls}
+      imageUrls={imageUrls}
     />
   );
 }

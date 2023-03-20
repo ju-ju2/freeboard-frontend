@@ -1,5 +1,6 @@
 import { Button, Modal } from "antd";
 import DaumPostcodeEmbed from "react-daum-postcode";
+import Uploads01 from "../../../../commons/uploads/01/uploads01.container";
 import * as S from "./BoardWrite.styles";
 import { IFreeBoardWriteUIProps } from "./BoardWrite.types";
 
@@ -105,19 +106,14 @@ export default function FreeBoardWriteUI(props: IFreeBoardWriteUIProps) {
         <S.MainFormat>
           <S.Label>사진첨부</S.Label>
           <S.PictureWrapper>
-            <S.UploadPicture onClick={props.onClickFile}>+</S.UploadPicture>
-            <S.UploadPicture>+</S.UploadPicture>
-            <S.UploadPicture>+</S.UploadPicture>
-            <input
-              style={{ display: "none" }}
-              ref={props.fileRef}
-              type="file"
-              onChange={props.onChangeFile}
-            ></input>
-            <img
-              style={{ width: "78px", height: "78px" }}
-              src={`https://storage.googleapis.com/${props.imageUrl}`}
-            ></img>
+            {props.imageUrls?.map((el, index) => (
+              <Uploads01
+                key={index}
+                fileUrl={el}
+                onChangeImageUrls={props.onChangeImageUrls}
+                index={index}
+              ></Uploads01>
+            ))}
           </S.PictureWrapper>
         </S.MainFormat>
         <S.MainFormat>
