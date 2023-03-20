@@ -14,4 +14,5 @@ export interface IBoardListUIProps {
     variables?: Partial<IQueryFetchBoardsArgs> | undefined
   ) => Promise<ApolloQueryResult<Pick<IQuery, "fetchBoards">>>;
   onChangeSearch: (event: ChangeEvent<HTMLInputElement>) => void;
+  keyword: string;
 }

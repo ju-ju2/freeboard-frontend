@@ -12,6 +12,7 @@ import _ from "lodash";
 
 export default function BoardList() {
   const [search, setSearch] = useState("");
+  const [keyword, setKeyword] = useState("");
   const { data, refetch } = useQuery<
     Pick<IQuery, "fetchBoards">,
     IQueryFetchBoardsArgs
@@ -35,6 +36,7 @@ export default function BoardList() {
 
   const getDebounce = _.debounce((value) => {
     void refetch({ search: value, page: 1 });
+    setKeyword(value);
   });
   const onChangeSearch = (event: ChangeEvent<HTMLInputElement>) => {
     getDebounce(event.target.value);
@@ -49,6 +51,7 @@ export default function BoardList() {
         onClickListTitle={onClickListTitle}
         refetch={refetch}
         onChangeSearch={onChangeSearch}
+        keyword={keyword}
       />
     </>
   );

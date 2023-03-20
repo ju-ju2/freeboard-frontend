@@ -2,6 +2,7 @@ import { GetDate } from "../../../../commons/utils/utils";
 import PageNation01 from "../../../commons/pagenation/01/pagenation01.container";
 import * as S from "./BoardList.styles";
 import { IBoardListUIProps } from "./boardList.types";
+import { v4 as uuidv4 } from "uuid";
 
 export default function BoardListUI(props: IBoardListUIProps) {
   console.log(props.count);
@@ -40,7 +41,19 @@ export default function BoardListUI(props: IBoardListUIProps) {
                 {index + 1}
               </S.ColumnBasic>
               <S.ColumnTitle id={el._id} onClick={props.onClickListTitle}>
-                {el.title}
+                {el.title
+                  .replaceAll(props.keyword, `!@9#$${props.keyword}!@9#$`)
+                  .split("!@9#$")
+                  .map((el) => (
+                    <span
+                      key={uuidv4()}
+                      style={{
+                        color: el === props.keyword ? "orange" : "black",
+                      }}
+                    >
+                      {el}
+                    </span>
+                  ))}
               </S.ColumnTitle>
               <S.ColumnBasic>{el.writer}</S.ColumnBasic>
               <S.ColumnBasic>{GetDate(el.createdAt)}</S.ColumnBasic>
