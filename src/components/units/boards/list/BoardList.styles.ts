@@ -60,6 +60,7 @@ export const SearchTitleInput = styled.input`
   height: 100%;
   background: none;
   border: none;
+  outline: none;
 `;
 export const SearchYear = styled.div`
   display: flex;

@@ -1,5 +1,5 @@
 import { ApolloQueryResult } from "@apollo/client";
-import { MouseEvent } from "react";
+import { ChangeEvent, MouseEvent } from "react";
 import {
   IQuery,
   IQueryFetchBoardsArgs,
@@ -13,4 +13,5 @@ export interface IBoardListUIProps {
   refetch: (
     variables?: Partial<IQueryFetchBoardsArgs> | undefined
   ) => Promise<ApolloQueryResult<Pick<IQuery, "fetchBoards">>>;
+  onChangeSearch: (event: ChangeEvent<HTMLInputElement>) => void;
 }

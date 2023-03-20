@@ -18,7 +18,10 @@ export default function BoardListUI(props: IBoardListUIProps) {
         <S.SearchWrapper>
           <S.SearchTitle>
             <S.IconSearch src="../../img/icon-search.png"></S.IconSearch>
-            <S.SearchTitleInput placeholder="제목을 검색해주세요"></S.SearchTitleInput>
+            <S.SearchTitleInput
+              onChange={props.onChangeSearch}
+              placeholder="제목을 검색해주세요"
+            ></S.SearchTitleInput>
           </S.SearchTitle>
           <S.SearchYear></S.SearchYear>
           <S.SearchButton>검색하기</S.SearchButton>
