@@ -3,6 +3,7 @@ import PageNation01 from "../../../commons/pagenation/01/pagenation01.container"
 import * as S from "./BoardList.styles";
 import { IBoardListUIProps } from "./boardList.types";
 import { v4 as uuidv4 } from "uuid";
+import SearchBar01 from "../../../../commons/searchBar/01/searchBar01.container";
 
 export default function BoardListUI(props: IBoardListUIProps) {
   console.log(props.count);
@@ -17,13 +18,18 @@ export default function BoardListUI(props: IBoardListUIProps) {
           <S.CardWrapper></S.CardWrapper>
         </S.CardListWrapper>
         <S.SearchWrapper>
-          <S.SearchTitle>
+          {/* <S.SearchTitle>
             <S.IconSearch src="../../img/icon-search.png"></S.IconSearch>
             <S.SearchTitleInput
               onChange={props.onChangeSearch}
               placeholder="제목을 검색해주세요"
             ></S.SearchTitleInput>
-          </S.SearchTitle>
+          </S.SearchTitle> */}
+          <SearchBar01
+            refetch={props.refetch}
+            onChangeKeyword={props.onChangeKeyword}
+            dataBoardsRefetch={props.dataBoardsRefetch}
+          />
           <S.SearchYear></S.SearchYear>
           <S.SearchButton>검색하기</S.SearchButton>
         </S.SearchWrapper>

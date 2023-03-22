@@ -1,20 +1,19 @@
-import { ApolloQueryResult } from "@apollo/client";
-import { MouseEvent } from "react";
+import { ChangeEvent } from "react";
 import {
   IQuery,
   IQueryFetchBoardsArgs,
   IQueryFetchBoardsCountArgs,
-} from "../../../../commons/types/generated/types";
+} from "../../types/generated/types";
+import { ApolloQueryResult } from "@apollo/client";
 
-export interface IBoardListUIProps {
-  data?: Pick<IQuery, "fetchBoards">;
-  count?: number;
-  onClickWriteBoard: () => void;
-  onClickListTitle: (event: MouseEvent<HTMLDivElement>) => void;
+export interface ISearchBar01UIProps {
+  onChangeSearch: (event: ChangeEvent<HTMLInputElement>) => void;
+}
+
+export interface ISearchBar01Props {
   refetch: (
     variables?: Partial<IQueryFetchBoardsArgs> | undefined
   ) => Promise<ApolloQueryResult<Pick<IQuery, "fetchBoards">>>;
-  keyword: string;
   onChangeKeyword: (value: string) => void;
   dataBoardsRefetch: (
     variables?: Partial<IQueryFetchBoardsCountArgs> | undefined
