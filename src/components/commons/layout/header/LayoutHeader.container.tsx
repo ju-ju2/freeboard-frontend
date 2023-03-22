@@ -8,7 +8,7 @@ export default function LayoutHeader() {
     void router.push("/boards");
   };
   const onClickLogin = () => {
-    void router.push("/boards");
+    void router.push("/login");
   };
   const onClickSignin = () => {
     void router.push("/boards");
