@@ -133,4 +133,5 @@ export const InBoardButton = styled.button`
   font-size: 16px;
   font-weight: 500;
   margin: 0 12px;
+  cursor: pointer;
 `;

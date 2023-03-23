@@ -8,6 +8,7 @@ import {
   IMutationUpdateBoardArgs,
   IUpdateBoardInput,
 } from "../../../../commons/types/generated/types";
+import { withAuth } from "../../../commons/hofs/withAuth";
 import FreeBoardWriteUI from "./BoardWrite.presenter";
 import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
 import { IFreeBoardWriteProps } from "./BoardWrite.types";
@@ -15,7 +16,7 @@ import { IFreeBoardWriteProps } from "./BoardWrite.types";
 // 1. 함수 위에서 mutation 가져오기 (대소문자 상관없다)
 // 2. 타입 설정해주기
 
-export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
+function FreeBoardWrite(props: IFreeBoardWriteProps) {
   console.log(props.data?.fetchBoard);
   const router = useRouter();
 
@@ -308,3 +309,5 @@ export default function FreeBoardWrite(props: IFreeBoardWriteProps) {
     />
   );
 }
+
+export default withAuth(FreeBoardWrite);

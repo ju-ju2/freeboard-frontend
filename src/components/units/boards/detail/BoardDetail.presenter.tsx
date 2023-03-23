@@ -67,7 +67,9 @@ export default function FreeBoardDetailUI(props: IFreeBoardDetailUIProps) {
         <S.InBoardButton onClick={props.onClickMoveToEdit}>
           수정하기
         </S.InBoardButton>
-        <S.InBoardButton>삭제하기</S.InBoardButton>
+        <S.InBoardButton onClick={props.onClickDeleteBoard}>
+          삭제하기
+        </S.InBoardButton>
       </S.ButtonWrapper>
     </S.AllWrapper>
   );

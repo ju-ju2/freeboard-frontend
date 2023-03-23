@@ -31,6 +31,9 @@ export default function FreeBoardDetail() {
   const onClickMoveToBoards = () => {
     router.push("/boards");
   };
+  const onClickDeleteBoard = () => {
+    alert("추후 기능 생성 예정");
+  };
 
   const [likeBoard] = useMutation<
     Pick<IMutation, "likeBoard">,
@@ -85,6 +88,7 @@ export default function FreeBoardDetail() {
       data={data}
       onClickMoveToEdit={onClickMoveToEdit}
       onClickMoveToBoards={onClickMoveToBoards}
+      onClickDeleteBoard={onClickDeleteBoard}
       onClickLike={onClickLike}
       onClickDislike={onClickDislike}
     />

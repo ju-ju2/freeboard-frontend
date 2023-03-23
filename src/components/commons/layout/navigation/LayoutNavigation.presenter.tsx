@@ -7,7 +7,7 @@ const NAVIGATION_MENU = [
   { name: "파이어베이스", page: "/firebaseBoards" },
   { name: "자유게시판", page: "/boards" },
   { name: "상품목록", page: "/products" },
-  { name: "마이페이지", page: "/mypage" },
+  { name: "마이페이지", page: "/myPage" },
 ];
 
 export default function LayoutHeaderUI(props: ILayoutNavigationUIProps) {

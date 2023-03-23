@@ -7,5 +7,5 @@ export const accessTokenState = atom({
 
 export const isSignUpState = atom({
   key: "isSignUpState",
-  default: true,
+  default: false,
 });
