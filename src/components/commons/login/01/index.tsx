@@ -2,6 +2,8 @@ import { gql, useMutation } from "@apollo/client";
 import { Modal } from "antd";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
+import { useRecoilState } from "recoil";
+import { accessTokenState } from "../../../../commons/store";
 import {
   IMutation,
   IMutationLoginUserArgs,
@@ -21,6 +23,7 @@ export default function LoginPage01() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
 
   const [loginUser] = useMutation<
     Pick<IMutation, "loginUser">,
@@ -42,6 +45,14 @@ export default function LoginPage01() {
         },
       });
       console.log(result);
+      const accessToken = result.data?.loginUser.accessToken;
+
+      if (!accessToken) {
+        Modal.confirm({ content: "로그인 정보가 없습니다. 다시 시도해주세요" });
+        return;
+      }
+      setAccessToken(accessToken);
+
       void router.push("./");
     } catch (error) {
       if (error instanceof Error) {
