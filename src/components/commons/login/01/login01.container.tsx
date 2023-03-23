@@ -1,4 +1,4 @@
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { Modal } from "antd";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
@@ -8,15 +8,8 @@ import {
   IMutation,
   IMutationLoginUserArgs,
 } from "../../../../commons/types/generated/types";
-import { MyButton, MyInput, Title, Wrapper, Dash } from "./login01.styles";
-
-const LOGIN_USER = gql`
-  mutation typeSetting($email: String!, $password: String!) {
-    loginUser(email: $email, password: $password) {
-      accessToken
-    }
-  }
-`;
+import LoginPage01UI from "./login01.presenter";
+import { LOGIN_USER } from "./login01.queries";
 
 export default function LoginPage01() {
   const router = useRouter();
@@ -64,23 +57,11 @@ export default function LoginPage01() {
     void router.push("./");
   };
   return (
-    <Wrapper>
-      <Title>CODE.CAMP</Title>
-      <MyInput
-        onChange={onChangeEmail}
-        type="text"
-        placeholder="이메일을 입력하세요."
-      />
-      <MyInput
-        onChange={onChangePassword}
-        type="password"
-        placeholder="비밀번호를 입력하세요."
-      />
-      <MyButton type="primary" onClick={onClickLogIn}>
-        로그인
-      </MyButton>
-      <Dash></Dash>
-      <MyButton onClick={onClickSignUp}>회원가입</MyButton>
-    </Wrapper>
+    <LoginPage01UI
+      onChangeEmail={onChangeEmail}
+      onChangePassword={onChangePassword}
+      onClickLogIn={onClickLogIn}
+      onClickSignUp={onClickSignUp}
+    />
   );
 }
