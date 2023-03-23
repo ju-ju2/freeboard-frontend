@@ -24,7 +24,6 @@ export default function LoginPage01() {
   const [password, setPassword] = useState("");
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
   const [isSignUp, setIsSignUp] = useRecoilState(isSignUpState);
-  const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
 
   const [loginUser] = useMutation<
     Pick<IMutation, "loginUser">,
@@ -46,6 +45,10 @@ export default function LoginPage01() {
     setPassword(event.target.value);
   };
   const onClickLogIn = async () => {
+    if (!email || !password) {
+      Modal.info({ content: "로그인 정보를 확인해주세요" });
+      return;
+    }
     try {
       const result = await loginUser({
         variables: {
@@ -61,9 +64,9 @@ export default function LoginPage01() {
         return;
       }
       setAccessToken(accessToken);
+      localStorage.setItem("accessToken", accessToken);
 
       void router.push("./");
-      setIsLoggedIn(true);
     } catch (error) {
       if (error instanceof Error) {
         Modal.error({ content: error.message });
@@ -72,6 +75,14 @@ export default function LoginPage01() {
   };
 
   const onClickSignUp = async () => {
+    if (!email || !password || !name) {
+      Modal.info({ content: "가입 정보를 확인해주세요" });
+      return;
+    }
+    if (!email.includes("@")) {
+      Modal.info({ content: "이메일 형식을 확인해주세요" });
+      return;
+    }
     try {
       const result = await createUser({
         variables: {

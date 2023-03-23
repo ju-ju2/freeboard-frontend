@@ -9,8 +9,3 @@ export const isSignUpState = atom({
   key: "isSignUpState",
   default: true,
 });
-
-export const isLoggedInState = atom({
-  key: "isLoggedInState",
-  default: false,
-});

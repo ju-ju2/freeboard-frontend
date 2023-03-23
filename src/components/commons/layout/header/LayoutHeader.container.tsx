@@ -1,6 +1,10 @@
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
-import { isLoggedInState, isSignUpState } from "../../../../commons/store";
+import {
+  accessTokenState,
+  isLoggedInState,
+  isSignUpState,
+} from "../../../../commons/store";
 import LayoutHeaderUI from "./LayoutHeader.presenter";
 
 import { useQuery } from "@apollo/client";
@@ -12,7 +16,7 @@ export default function LayoutHeader() {
     useQuery<Pick<IQuery, "fetchUserLoggedIn">>(FETCH_USER_LOGGED_IN);
 
   const [isSignUp, setIsSignUp] = useRecoilState(isSignUpState);
-  const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
 
   const router = useRouter();
 
@@ -28,7 +32,7 @@ export default function LayoutHeader() {
     setIsSignUp(true);
   };
   const onClickLogOut = () => {
-    setIsLoggedIn(false);
+    localStorage.removeItem("accessToken");
   };
 
   return (
