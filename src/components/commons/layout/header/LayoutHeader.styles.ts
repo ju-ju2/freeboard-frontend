@@ -28,6 +28,11 @@ export const Login = styled.button`
   background: none;
 `;
 
+export const User = styled.div`
+  text-decoration: underline;
+  margin-right: 10px;
+`;
+
 export const SignIn = styled.button`
   height: 44px;
   background-color: #ffd600;

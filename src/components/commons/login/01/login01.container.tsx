@@ -3,19 +3,18 @@ import { Modal } from "antd";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
 import { useRecoilState } from "recoil";
-import { accessTokenState, isSignUpState } from "../../../../commons/store";
+import {
+  accessTokenState,
+  isLoggedInState,
+  isSignUpState,
+} from "../../../../commons/store";
 import {
   IMutation,
   IMutationCreateUserArgs,
   IMutationLoginUserArgs,
-  IQuery,
 } from "../../../../commons/types/generated/types";
 import LoginPage01UI from "./login01.presenter";
-import {
-  CREATE_USER,
-  FETCH_USER_LOGGED_IN,
-  LOGIN_USER,
-} from "./login01.queries";
+import { CREATE_USER, LOGIN_USER } from "./login01.queries";
 
 export default function LoginPage01() {
   const router = useRouter();
@@ -25,6 +24,7 @@ export default function LoginPage01() {
   const [password, setPassword] = useState("");
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
   const [isSignUp, setIsSignUp] = useRecoilState(isSignUpState);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
 
   const [loginUser] = useMutation<
     Pick<IMutation, "loginUser">,
@@ -35,9 +35,6 @@ export default function LoginPage01() {
     Pick<IMutation, "createUser">,
     IMutationCreateUserArgs
   >(CREATE_USER);
-
-  const { data } =
-    useQuery<Pick<IQuery, "fetchUserLoggedIn">>(FETCH_USER_LOGGED_IN);
 
   const onChangeName = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -56,7 +53,7 @@ export default function LoginPage01() {
           password,
         },
       });
-      console.log(result);
+      // console.log(result);
       const accessToken = result.data?.loginUser.accessToken;
 
       if (!accessToken) {
@@ -66,12 +63,14 @@ export default function LoginPage01() {
       setAccessToken(accessToken);
 
       void router.push("./");
+      setIsLoggedIn(true);
     } catch (error) {
       if (error instanceof Error) {
         Modal.error({ content: error.message });
       }
     }
   };
+
   const onClickSignUp = async () => {
     try {
       const result = await createUser({
