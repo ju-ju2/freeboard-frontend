@@ -1,14 +1,21 @@
 import { useMutation, useQuery } from "@apollo/client";
+import { Modal } from "antd";
 import { useRouter } from "next/router";
 import {
   IMutation,
+  IMutationDeleteBoardArgs,
   IMutationDislikeBoardArgs,
   IMutationLikeBoardArgs,
   IQuery,
   IQueryFetchBoardArgs,
 } from "../../../../commons/types/generated/types";
 import FreeBoardDetailUI from "./BoardDetail.presenter";
-import { DISLIKE_BOARD, FETCH_BOARD, LIKE_BOARD } from "./BoardDetail.queries";
+import {
+  DELETE_BOARD,
+  DISLIKE_BOARD,
+  FETCH_BOARD,
+  LIKE_BOARD,
+} from "./BoardDetail.queries";
 
 export default function FreeBoardDetail() {
   const router = useRouter();
@@ -24,15 +31,26 @@ export default function FreeBoardDetail() {
   );
   console.log(data);
 
+  const [deleteBoard] = useMutation<
+    Pick<IMutation, "deleteBoard">,
+    IMutationDeleteBoardArgs
+  >(DELETE_BOARD);
+
   const onClickMoveToEdit = () => {
-    router.push(`/boards/${router.query.boardId}/edit`);
+    void router.push(`/boards/${router.query.boardId}/edit`);
   };
 
   const onClickMoveToBoards = () => {
-    router.push("/boards");
+    void router.push("/boards");
   };
-  const onClickDeleteBoard = () => {
-    alert("추후 기능 생성 예정");
+  const onClickDeleteBoard = async () => {
+    await deleteBoard({
+      variables: {
+        boardId: String(router.query.boardId),
+      },
+    });
+    Modal.info({ content: "게시물이 삭제되었습니다." });
+    void router.push("/boards");
   };
 
   const [likeBoard] = useMutation<

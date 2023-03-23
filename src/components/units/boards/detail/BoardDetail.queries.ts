@@ -20,6 +20,11 @@ export const FETCH_BOARD = gql`
     }
   }
 `;
+export const DELETE_BOARD = gql`
+  mutation typeSetting($boardId: ID!) {
+    deleteBoard(boardId: $boardId)
+  }
+`;
 
 export const LIKE_BOARD = gql`
   mutation typeSetting($boardId: ID!) {
