@@ -7,3 +7,13 @@ export const LOGIN_USER = gql`
     }
   }
 `;
+
+export const CREATE_USER = gql`
+  mutation typeSetting($createUserInput: CreateUserInput!) {
+    createUser(createUserInput: $createUserInput) {
+      _id
+      email
+      name
+    }
+  }
+`;

@@ -1,7 +1,10 @@
 import { useRouter } from "next/router";
+import { useRecoilState } from "recoil";
+import { isSignUpState } from "../../../../commons/store";
 import LayoutHeaderUI from "./LayoutHeader.presenter";
 
 export default function LayoutHeader() {
+  const [isSignUp, setIsSignUp] = useRecoilState(isSignUpState);
   const router = useRouter();
 
   const onClickLogo = () => {
@@ -9,9 +12,11 @@ export default function LayoutHeader() {
   };
   const onClickLogin = () => {
     void router.push("/login");
+    setIsSignUp(false);
   };
   const onClickSignin = () => {
-    void router.push("/boards");
+    void router.push("/login");
+    setIsSignUp(true);
   };
 
   return (
