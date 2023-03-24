@@ -6,7 +6,7 @@ const NAVIGATION_MENU = [
   { name: "openApi", page: "/openapi" },
   { name: "파이어베이스", page: "/firebaseBoards" },
   { name: "자유게시판", page: "/boards" },
-  { name: "상품목록", page: "/products" },
+  { name: "중고마켓", page: "/freeMarket" },
   { name: "마이페이지", page: "/myPage" },
 ];
 
