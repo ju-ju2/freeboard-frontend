@@ -3,10 +3,16 @@
 import styled from "@emotion/styled";
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
-import { isSignUpState } from "../../src/commons/store";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useRouter } from "next/router";
+import { gql, useMutation } from "@apollo/client";
+import {
+  IMutation,
+  IMutationLoginUserArgs,
+} from "../../src/commons/types/generated/types";
+import { Modal } from "antd";
+import { accessTokenState } from "../../src/commons/store";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -82,16 +88,49 @@ const schema = yup.object({
   password: yup.string().required("비밀번호를 입력해주세요"),
 });
 
+const LOGIN_USER = gql`
+  mutation typeSetting($password: String!, $email: String!) {
+    loginUser(password: $password, email: $email) {
+      accessToken
+    }
+  }
+`;
+
 export default function LoginPage() {
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+  const [loginUser] = useMutation<
+    Pick<IMutation, "loginUser">,
+    IMutationLoginUserArgs
+  >(LOGIN_USER);
   const router = useRouter();
   const { register, handleSubmit, formState } = useForm<IFormData>({
     resolver: yupResolver(schema),
     mode: "onChange",
   });
 
-  const onClickLogIn = (data: IFormData) => {
+  const onClickLogIn = async (data: IFormData) => {
     console.log(data);
-    console.log("로그인");
+    try {
+      const result = await loginUser({
+        variables: {
+          password: data.password,
+          email: data.email,
+        },
+      });
+      console.log(result.data?.loginUser.accessToken);
+      const accessToken = result.data?.loginUser.accessToken;
+      if (!accessToken) {
+        Modal.warning({ content: "로그인에 실패하셨습니다" });
+        return;
+      }
+      setAccessToken(accessToken);
+      localStorage.setItem("accessToken", accessToken);
+      void router.push("/");
+    } catch (error) {
+      if (error instanceof Error) {
+        Modal.error({ content: error.message });
+      }
+    }
   };
 
   const onClickGoToSignUp = () => {

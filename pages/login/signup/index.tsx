@@ -2,6 +2,12 @@ import styled from "@emotion/styled";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { gql, useMutation } from "@apollo/client";
+import {
+  IMutation,
+  IMutationCreateUserArgs,
+} from "../../../src/commons/types/generated/types";
+import { Modal } from "antd";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -73,6 +79,15 @@ export const PasswordRule = styled.div`
   color: gray;
 `;
 
+const CREATE_USER = gql`
+  mutation typeSetting($createUserInput: CreateUserInput!) {
+    createUser(createUserInput: $createUserInput) {
+      _id
+      name
+    }
+  }
+`;
+
 interface IFormData {
   name: string;
   email: string;
@@ -94,14 +109,35 @@ const schema = yup.object({
 });
 
 export default function SignUpPage() {
+  const [createUser] = useMutation<
+    Pick<IMutation, "createUser">,
+    IMutationCreateUserArgs
+  >(CREATE_USER);
+
   const { register, handleSubmit, formState } = useForm<IFormData>({
     resolver: yupResolver(schema),
     mode: "onChange",
   });
 
-  const onClickSignUp = (data: IFormData) => {
+  const onClickSignUp = async (data: IFormData) => {
     console.log(data);
-    console.log("회원가입");
+    try {
+      const result = await createUser({
+        variables: {
+          createUserInput: {
+            email: data.email,
+            password: data.password,
+            name: data.name,
+          },
+        },
+      });
+      const userName = result.data?.createUser.name;
+      Modal.info({ content: `${userName}님 회원가입에 성공하였습니다` });
+    } catch (error) {
+      if (error instanceof Error) {
+        Modal.error({ content: error.message });
+      }
+    }
   };
 
   return (
