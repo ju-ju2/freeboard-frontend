@@ -1,12 +1,7 @@
-// import LoginPage01 from "../../src/components/commons/login/01/login01.container";
-
 import styled from "@emotion/styled";
 import { useForm } from "react-hook-form";
-import { useRecoilState } from "recoil";
-import { isSignUpState } from "../../src/commons/store";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useRouter } from "next/router";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -69,22 +64,24 @@ interface IFormData {
   password: string;
 }
 
-export default function LoginPage() {
-  const router = useRouter();
-  const { register, handleSubmit, formState } = useForm<IFormData>();
+export default function SignUpPage() {
+  const { register, handleSubmit } = useForm<IFormData>();
 
-  const onClickLogIn = (data: IFormData) => {
+  const onClickSignUp = (data: IFormData) => {
     console.log(data);
-    console.log("로그인");
+    console.log("회원가입");
   };
 
-  const onClickGoToSignUp = () => {
-    void router.push("/login/signup");
-  };
   return (
-    <form onSubmit={handleSubmit(onClickLogIn)}>
+    <form onSubmit={handleSubmit(onClickSignUp)}>
       <Wrapper>
         <Title>CODE.CAMP</Title>
+
+        <MyInput
+          type="text"
+          placeholder="이름을 입력하세요."
+          {...register("name")}
+        />
 
         <MyInput
           type="text"
@@ -96,12 +93,7 @@ export default function LoginPage() {
           placeholder="비밀번호를 입력하세요."
           {...register("password")}
         />
-        <MyLogInButton>로그인</MyLogInButton>
-
-        <Dash></Dash>
-        <MySignUpButton type="button" onClick={onClickGoToSignUp}>
-          회원가입
-        </MySignUpButton>
+        <MyLogInButton>회원가입</MyLogInButton>
       </Wrapper>
       {/* <LoginPage01 /> */}
     </form>
