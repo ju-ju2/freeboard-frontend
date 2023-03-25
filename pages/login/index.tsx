@@ -19,13 +19,16 @@ export const Title = styled.div`
   font-size: 36px;
   margin-bottom: 30px;
 `;
+export const InputWrapper = styled.div`
+  width: 500px;
+  margin-bottom: 20px;
+`;
 export const MyInput = styled.input`
   width: 500px;
   height: 50px;
-  margin-bottom: 20px;
   border: 0.5px solid gray;
   border-radius: 5px;
-  padding-left: 20px;
+  padding-left: 10px;
 `;
 export const MyLogInButton = styled.button`
   width: 500px;
@@ -62,16 +65,29 @@ export const Dash = styled.div`
   height: 20px;
   border-top: 2px solid lightgray;
 `;
+export const LoginError = styled.div`
+  width: 500px;
+  padding: 10px 0 0 20px;
+  font-size: 12px;
+  color: red;
+`;
 
 interface IFormData {
   name: string;
   email: string;
   password: string;
 }
+const schema = yup.object({
+  email: yup.string().required("이메일을 입력해주세요"),
+  password: yup.string().required("비밀번호를 입력해주세요"),
+});
 
 export default function LoginPage() {
   const router = useRouter();
-  const { register, handleSubmit, formState } = useForm<IFormData>();
+  const { register, handleSubmit, formState } = useForm<IFormData>({
+    resolver: yupResolver(schema),
+    mode: "onChange",
+  });
 
   const onClickLogIn = (data: IFormData) => {
     console.log(data);
@@ -85,17 +101,22 @@ export default function LoginPage() {
     <form onSubmit={handleSubmit(onClickLogIn)}>
       <Wrapper>
         <Title>CODE.CAMP</Title>
-
-        <MyInput
-          type="text"
-          placeholder="이메일을 입력하세요."
-          {...register("email")}
-        />
-        <MyInput
-          type="password"
-          placeholder="비밀번호를 입력하세요."
-          {...register("password")}
-        />
+        <InputWrapper>
+          <MyInput
+            type="text"
+            placeholder="이메일을 입력하세요."
+            {...register("email")}
+          />
+          <LoginError>{formState.errors.email?.message}</LoginError>
+        </InputWrapper>
+        <InputWrapper>
+          <MyInput
+            type="password"
+            placeholder="비밀번호를 입력하세요."
+            {...register("password")}
+          />
+          <LoginError>{formState.errors.password?.message}</LoginError>
+        </InputWrapper>
         <MyLogInButton>로그인</MyLogInButton>
 
         <Dash></Dash>
