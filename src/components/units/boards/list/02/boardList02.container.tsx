@@ -1,4 +1,5 @@
 import { useQuery } from "@apollo/client";
+import InfiniteScroll from "react-infinite-scroller";
 import {
   IQuery,
   IQueryFetchUseditemsArgs,
@@ -7,10 +8,13 @@ import { FETCH_USED_ITEMS } from "./boardList02.queries";
 import * as S from "./boardList02.styles";
 
 export default function BoardList02() {
-  const { data } = useQuery<
+  const { data, fetchMore } = useQuery<
     Pick<IQuery, "fetchUseditems">,
     IQueryFetchUseditemsArgs
   >(FETCH_USED_ITEMS);
+
+  const onLoadMore = () => {};
+
   return (
     <>
       <S.MarketWrapper>
@@ -29,23 +33,31 @@ export default function BoardList02() {
           <S.CardWrapper></S.CardWrapper>
           <S.CardWrapper></S.CardWrapper>
         </S.CardListWrapper>
-        {data?.fetchUseditems.map((el) => (
-          <>
-            <S.Dash></S.Dash>
-            <S.ListItemWrapper key={el._id}>
-              <S.ImgBox
-                src={`https://storage.googleapis.com/${el.images?.[0]}`}
-              />
-              <S.TextWrapper>
-                <S.ListTitle>{el.name}</S.ListTitle>
-                <S.SubTitle>{el.remarks}</S.SubTitle>
-                <S.Writer>{el.seller?.name}</S.Writer>
-                <S.PickedCount>🧡 {el.pickedCount}</S.PickedCount>
-              </S.TextWrapper>
-              <S.Price>{el.price}원</S.Price>
-            </S.ListItemWrapper>
-          </>
-        ))}
+        <InfiniteScroll
+          pageStart={0}
+          loadMore={onLoadMore}
+          hasMore={true}
+          useWindow={true}
+          style={{ width: "100%" }}
+        >
+          {data?.fetchUseditems.map((el) => (
+            <>
+              <S.Dash></S.Dash>
+              <S.ListItemWrapper key={el._id}>
+                <S.ImgBox
+                  src={`https://storage.googleapis.com/${el.images?.[0]}`}
+                />
+                <S.TextWrapper>
+                  <S.ListTitle>{el.name}</S.ListTitle>
+                  <S.SubTitle>{el.remarks}</S.SubTitle>
+                  <S.Writer>{el.seller?.name}</S.Writer>
+                  <S.PickedCount>🧡 {el.pickedCount}</S.PickedCount>
+                </S.TextWrapper>
+                <S.Price>{el.price}원</S.Price>
+              </S.ListItemWrapper>
+            </>
+          ))}
+        </InfiniteScroll>
       </S.MarketWrapper>
     </>
   );
