@@ -10,6 +10,7 @@ import LayoutHeaderUI from "./LayoutHeader.presenter";
 import { useQuery } from "@apollo/client";
 import { IQuery } from "../../../../commons/types/generated/types";
 import { FETCH_USER_LOGGED_IN } from "./LayoutHeader.queries";
+import { useEffect } from "react";
 
 export default function LayoutHeader() {
   const { data } =
@@ -33,7 +34,11 @@ export default function LayoutHeader() {
   };
   const onClickLogOut = () => {
     localStorage.removeItem("accessToken");
+    setAccessToken("");
   };
+  useEffect(() => {
+    console.log("재실행되는지 확인");
+  }, [accessToken]);
 
   return (
     <LayoutHeaderUI
