@@ -117,3 +117,18 @@ export const Writer = styled.div`
 export const PickedCount = styled.div`
   font-size: 16px;
 `;
+export const ButtonUpload = styled.button`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 16px;
+  width: 171px;
+  height: 52px;
+  background: #ffffff;
+  border: 1px solid #f2f2f2;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+`;

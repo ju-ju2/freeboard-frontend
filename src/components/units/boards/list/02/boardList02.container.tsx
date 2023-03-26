@@ -1,4 +1,5 @@
 import { useQuery } from "@apollo/client";
+import { useRouter } from "next/router";
 import InfiniteScroll from "react-infinite-scroller";
 import {
   IQuery,
@@ -8,12 +9,16 @@ import { FETCH_USED_ITEMS } from "./boardList02.queries";
 import * as S from "./boardList02.styles";
 
 export default function BoardList02() {
+  const router = useRouter();
   const { data, fetchMore } = useQuery<
     Pick<IQuery, "fetchUseditems">,
     IQueryFetchUseditemsArgs
   >(FETCH_USED_ITEMS);
 
   const onLoadMore = () => {};
+  const onClickUpload = () => {
+    void router.push("/freeMarket/new");
+  };
 
   return (
     <>
@@ -33,6 +38,8 @@ export default function BoardList02() {
           <S.CardWrapper></S.CardWrapper>
           <S.CardWrapper></S.CardWrapper>
         </S.CardListWrapper>
+        <S.ButtonUpload onClick={onClickUpload}>게시물 등록</S.ButtonUpload>
+
         <InfiniteScroll
           pageStart={0}
           loadMore={onLoadMore}

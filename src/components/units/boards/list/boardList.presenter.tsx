@@ -74,7 +74,6 @@ export default function BoardListUI(props: IBoardListUIProps) {
           </S.UploadButton>
         </S.FooterWrapper>
       </S.ListWrapper>
-      ;
     </>
   );
 }
